@@ -1,0 +1,31 @@
+# server has three main properties:
+# port : udserver port, default is 60001
+# uuid_path : each udserver has a unique id, uuid file will be created automatically
+#             when the first run
+# timeout : for each client connection, set the read timeout. default 300 seconds
+
+server: 
+    port: 60001
+    uuid_path: etc/id.uuid
+    timeout: 300
+
+router:
+    p_01_83:
+        - "localhost:9700"
+ 
+ 
+#cache has 4 main properties
+# limit: commit to database for a limited buffer size. default value is 10000
+# peroid: when time specified by period property is reached, commit cached message to database
+# threads_max: max commiting concurrently exists
+# check_interval: the interval to check whether a period is reached. do not change this value.
+cache: 
+    limit: 10000
+    period: 1
+    threads_max: 50
+    check_interval: 1
+
+     
+log:
+    logcodec: false
+    logconfigfile: etc/log4j.conf

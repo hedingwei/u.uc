@@ -1,0 +1,9 @@
+repoadmin -C -b ./ -t 0x00 -n name
+repoadmin -A -t 0x00 -n name -m /var/d/0x00msg.xml
+repoadmin -U -t 0x00 -n name -m /var/d/0x00msg.xml
+repoadmin -D -t 0x00 -n name -M 1
+repoadmin -c -t 0x00 -n name
+repoadmin -p -t 0x00 -n name -M -v 3
+repoadmin -i -t 0x00 -n name
+
+
