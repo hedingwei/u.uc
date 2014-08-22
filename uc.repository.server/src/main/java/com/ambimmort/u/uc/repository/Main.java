@@ -5,13 +5,8 @@
  */
 package com.ambimmort.u.uc.repository;
 
-import com.ambimmort.u.uc.repository.webservice.RepositoryManagementWebServiceBeanImpl;
-import java.util.LinkedList;
-import java.util.List;
-import javax.ws.rs.ext.RuntimeDelegate;
-import javax.xml.ws.Endpoint;
+import com.ambimmort.u.uc.repository.webservice.rsmapi.RepositoryServerManagementWebServiceBeanImpl;
 import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
 
 /**
@@ -20,17 +15,16 @@ import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
  */
 public class Main {
 
-    private static final String ADDRESS = "http://localhost:9000/";
+    private static final String ADDRESS = "http://localhost:9001/reposerver";
 
     public static void main(String[] args) {
-        
         UcPolicyRepository.init();
-        
         JaxWsServerFactoryBean factory = new JaxWsServerFactoryBean();  
-        factory.setServiceClass(RepositoryManagementWebServiceBeanImpl.class);  
+        factory.setServiceClass(RepositoryServerManagementWebServiceBeanImpl.class);  
         factory.setAddress(ADDRESS);
         Server server = factory.create();  
         server.start();
+
 //        JAXRSServerFactoryBean jaxrsServerFactory = RuntimeDelegate.getInstance().createEndpoint(new JaxRsApiApplication(), JAXRSServerFactoryBean.class);
 //        jaxrsServerFactory.setAddress("http://localhost:9000");
 //        List<Object> list = new LinkedList<Object>();

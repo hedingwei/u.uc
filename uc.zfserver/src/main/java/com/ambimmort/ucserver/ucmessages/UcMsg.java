@@ -5,13 +5,19 @@
  */
 package com.ambimmort.ucserver.ucmessages;
 
+import com.ambimmort.msg0X00.Msg0X00Document;
+import com.ambimmort.msg0X00.Msg0X00Document.Msg0X00.CookieHosts.CookieHost;
+import com.ambimmort.msg0X00.Msg0X00Document.Msg0X00.SearchEngines.SearchEngine;
 import com.ambimmort.ucserver.ucmessages.exceptions.UcTypeException;
+import com.ambimmort.xmlbeanutil.Test;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.xmlbeans.XmlException;
 
 /**
  *
@@ -117,8 +123,17 @@ public abstract class UcMsg {
 
         private UcType.UINT2 Web_Hit_Threshold;
         private UcType.UINT2 KW_Threholds;
-        private UcType.UArray SearchEngines;
-        private UcType.UArray CookieHosts;
+        private UcType.UArray_UINT1 SearchEngines;
+        private UcType.UArray_UINT1 CookieHosts;
+        private UcType.UString_UINT4 serialNo;
+
+        public void setSerialNo(UcType.UString_UINT4 serialNo) {
+            this.serialNo = serialNo;
+        }
+
+        public UcType.UString_UINT4 getSerialNo() {
+            return serialNo;
+        }
 
         @Override
         public void parseBytes(byte[] header, byte[] body) {
@@ -127,13 +142,52 @@ public abstract class UcMsg {
 
         @Override
         public byte[] toBytes() {
-
-            return null;
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            try {
+                byte[] bodys = getBodyBytes();
+                getHeader().setMessageLength(UcType.newUINT4(bodys.length + 16));
+                
+                os.write(getHeader().getBytes());
+                os.write(bodys);
+            } catch (IOException ex) {
+                Logger.getLogger(x00.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UcTypeException ex) {
+                Logger.getLogger(UcMsg.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(x00.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return os.toByteArray();
         }
 
         @Override
         public void parseXML(String xmlForm) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            try {
+              
+                Msg0X00Document document = Msg0X00Document.Factory.parse(xmlForm);
+                Msg0X00Document.Msg0X00 msg = document.getMsg0X00();
+                Web_Hit_Threshold = UcType.UINT2.newUINT2(msg.getWebHitThreshold());
+                KW_Threholds = UcType.UINT2.newUINT2(msg.getKWThreholds());
+                SearchEngines = UcType.newUArray_UINT1();
+                for (SearchEngine se : msg.getSearchEngines().getSearchEngineArray()) {
+                    SearchEngines.push(UcType.newUString_UINT1(se.getSEName()));
+                }
+                CookieHosts = UcType.newUArray_UINT1();
+                for (CookieHost host : msg.getCookieHosts().getCookieHostArray()) {
+                    CookieHosts.push(UcType.newUString_UINT1(host.getName()));
+                    CookieHosts.push(UcType.newUString_UINT1(host.getKey()));
+                }
+
+            } catch (XmlException ex) {
+                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UcTypeException ex) {
+                Logger.getLogger(UcMsg.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UcMsg.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         @Override
@@ -143,7 +197,23 @@ public abstract class UcMsg {
 
         @Override
         public byte[] getBodyBytes() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            try {
+                os.write(Web_Hit_Threshold.getBytes());
+                os.write(KW_Threholds.getBytes());
+                os.write(SearchEngines.getBytes());
+                os.write(CookieHosts.getBytes());
+                os.write(serialNo.getBytes());
+            } catch (IOException ex) {
+                Logger.getLogger(x00.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    os.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(x00.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return os.toByteArray();
         }
 
     }
@@ -306,6 +376,8 @@ public abstract class UcMsg {
     }
 
     public static void main(String[] args) {
+        UcMsg.x00 x00 = new UcMsg.x00();
+
         UcMsg.xCD ack = new UcMsg.xCD();
         try {
             ack.setMessageType(UcType.newUINT1(0x00));

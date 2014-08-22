@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x08"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x08" elementFormDefault="qualified">
+
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+	<xs:element name="Type_0x08">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.3.7 访问指定应用的用户统计策略
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="R_StartTime" type="u:UINT4"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="R_EndTime" type="u:UINT4" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="AppType" type="u:UINT1" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="AppID" type="u:UINT2" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="AppName" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="UserType" type="u:UINT1" maxOccurs="1"
+							minOccurs="1">
+						</xs:element>
+						<xs:element name="MessageSerialNo" type="u:UINT4"
+							maxOccurs="1" minOccurs="1"></xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

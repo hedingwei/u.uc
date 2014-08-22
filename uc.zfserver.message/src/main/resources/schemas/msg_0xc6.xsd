@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0xc6"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0xc6" elementFormDefault="qualified">
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+	<xs:element name="Type_0xc6">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				DPI 设备状态查询回应(动态信息)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="Ports" maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									本DPI设备的总端口数，对应Total_PortsNum字段，1 Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Port" maxOccurs="unbounded" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="PortNo" type="u:UINT1"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="PortInfo" type="string"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="PortUsage" type="u:UINT1"
+													maxOccurs="1" minOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="CPUs" maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									本DPI设备中所含的CPU数，对应Total_CPU_Num字段，2 Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CPU" maxOccurs="unbounded" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="CPU_No" type="u:UINT2"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="CPU_Usage" type="u:UINT1"
+													maxOccurs="1" minOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

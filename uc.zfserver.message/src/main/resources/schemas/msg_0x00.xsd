@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x00"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x00" elementFormDefault="qualified">
+
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+	<xs:element name="msg_0x00">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.3.1 通用参数设置
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="Web_Hit_Threshold" type="u:UINT2"
+							maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									针对Web类流量进行统计的点击阈值，对应Web_Hit_Threshold字段，2 Bytes
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="KW_Threholds" type="u:UINT2"
+							maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									统计关键词的搜索阈值，对应KW_Threholds 字段，2 Bytes
+								</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SearchEngines">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									需关注的主流搜索引擎，SearchEngines的子元素个数对应SearchEngineNum 字段，1 Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SearchEngine" maxOccurs="255"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="SEName" type="string"
+													maxOccurs="1" minOccurs="1">
+													<xs:annotation>
+														<xs:documentation xml:lang="zh">
+															搜索引擎名字，对应SEName_Lenth和SEName 字段，
+														</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Cookie_Hosts">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Cookie_Host" maxOccurs="255"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="name" type="string" maxOccurs="1"
+													minOccurs="1"></xs:element>
+												<xs:element name="key" type="string" maxOccurs="1"
+													minOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="MessageSerialNo" type="u:UINT4"
+							maxOccurs="1" minOccurs="1" default="00000000"></xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

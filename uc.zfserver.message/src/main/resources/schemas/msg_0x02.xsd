@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x02"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x02" elementFormDefault="qualified">
+
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+	
+	<xs:element name="Type_0x02">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.3.3 Web 类流量管理策略
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+		
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="CType" maxOccurs="1" minOccurs="1">
+							<xs:simpleType>
+								<xs:restriction base="integer">
+									<xs:minInclusive value="1" />
+									<xs:maxInclusive value="3" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+
+						<xs:element name="CWebTypes" maxOccurs="1" minOccurs="1">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CWebType" type="u:UINT1"
+										maxOccurs="255" minOccurs="0"></xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+
+						<xs:element name="C_TimeSlots" maxOccurs="1" minOccurs="1">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="C_TimeSlot" maxOccurs="255"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="C_Starttime" type="u:UINT4"
+													minOccurs="1" maxOccurs="1"></xs:element>
+												<xs:element name="C_Stoptime" type="u:UINT4"
+													minOccurs="1" maxOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						
+						<xs:element name="Adv_URL" type="string" minOccurs="1"
+							maxOccurs="1"></xs:element>
+						<xs:element name="MessageSerialNo" type="u:UINT4"
+							maxOccurs="1" minOccurs="1"></xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

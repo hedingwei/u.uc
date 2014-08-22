@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.ambimmort.com/UType" xmlns:u="http://www.ambimmort.com/UType"
+	elementFormDefault="qualified">
+
+	<simpleType name="UINT1">
+		<restriction base="integer">
+			<minInclusive value="0" />
+			<maxInclusive value="255" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="UINT2">
+		<restriction base="integer">
+			<minInclusive value="0" />
+			<maxInclusive value="65535" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="UINT4">
+		<restriction base="integer">
+			<minInclusive value="0" />
+			<maxInclusive value="2147483647" />
+		</restriction>
+	</simpleType>
+
+
+	<simpleType name="IPType">
+		<restriction base="string">
+			<enumeration value="IPv4"></enumeration>
+			<enumeration value="IPv6"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="IPv4">
+		<restriction base="string">
+			<pattern value="([0-9]*\.){3}[0-9]*" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="IPv6">
+		<restriction base="string">
+			<pattern value="([A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="FTPUserName">
+		<restriction base="string">
+			<pattern value="[A-Za-z0-9]{8}" />
+		</restriction>
+	</simpleType>
+	<simpleType name="FTPPassword">
+		<restriction base="string">
+			<pattern value="[A-Za-z0-9]{8}" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="Type_IP">
+		<sequence>
+			<element name="IPType" type="u:IPType" maxOccurs="1"
+				minOccurs="1" default="IPv4"></element>
+			<choice>
+				<element name="IPv4Address" type="u:IPv4" maxOccurs="1"
+					minOccurs="1" default="0.0.0.0"></element>
+				<element name="IPv6Address" type="u:IPv6" maxOccurs="1"
+					minOccurs="1"></element>
+			</choice>
+		</sequence>
+	</complexType>
+
+	<simpleType name="MessageType">
+		<restriction base="integer">
+			<minInclusive value="0" />
+			<maxInclusive value="255" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="Type_UcMessage" abstract="true">
+		<attribute name="messageNo" type="u:UINT2" use="required"></attribute>
+		<attribute name="messageSequenceNo" type="u:UINT4"
+			use="required"></attribute>
+		<attribute name="messageSerialNo" type="u:UINT4" use="required"></attribute>
+              
+	</complexType>
+	
+</schema>

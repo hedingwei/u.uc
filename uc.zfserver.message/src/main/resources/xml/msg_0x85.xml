@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x85 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x85" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x85 ../xsd/msg_0x85.xsd ">
+	<Bind_Action>0</Bind_Action>
+	<UserType>0</UserType>
+	<UserName>tns:UserName</UserName>
+	<Messages>
+		<Message>
+			<MessageType>0</MessageType>
+			<MessageNo>0</MessageNo>
+		</Message>
+		<Message>
+			<MessageType>0</MessageType>
+			<MessageNo>0</MessageNo>
+		</Message>
+	</Messages>
+</Type_0x85>

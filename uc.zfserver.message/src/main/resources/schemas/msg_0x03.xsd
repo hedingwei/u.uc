@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x03"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x03" elementFormDefault="qualified">
+
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+
+	<xs:element name="Type_0x03">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.6.8 URL 分类批量查询
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="WebHosts" maxOccurs="unbounded"
+							minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="WebHost" type="string" maxOccurs="1"
+										minOccurs="1">
+										<xs:annotation>
+											<xs:documentation xml:lang="zh">
+												对应于用户访问网址Host值，对应WebHost字段，变长
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="HitFrquency" type="u:UINT2"
+										maxOccurs="1" minOccurs="1">
+										<xs:annotation>
+											<xs:documentation xml:lang="zh">
+												对应于用户对该网站的点击次数。对应HitFrquency字段，2 Bytes
+											</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

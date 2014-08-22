@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0xc0"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0xc0" elementFormDefault="qualified">
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+	<xs:element name="Type_0xc0">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				DPI 通用信息下发
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="Dev_Name" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="DeploySiteName" type="string"
+							maxOccurs="1" minOccurs="1"></xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

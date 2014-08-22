@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0xcd messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0xcd" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0xcd ../xsd/msg_0xcd.xsd ">
+	<MessageType>0</MessageType>
+	<MessageNo>0</MessageNo>
+	<MessageSequenceNo>0</MessageSequenceNo>
+	<UcPacketErrorStatus>0</UcPacketErrorStatus>
+	<UcPacketErrorInfo>UcPacketErrorInfo</UcPacketErrorInfo>
+</Type_0xcd>

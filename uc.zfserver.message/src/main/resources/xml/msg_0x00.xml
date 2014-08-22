@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<msg_0x00 xmlns="http://www.ambimmort.com/msg_0x00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ambimmort.com/msg_0x00 msg_0x00.xsd"
+	messageNo="0" messageSequenceNo="1" messageSerialNo="1">
+	<Web_Hit_Threshold>0</Web_Hit_Threshold>
+	<KW_Threholds>0</KW_Threholds>
+	<SearchEngines>
+		<SearchEngine>
+			<SEName>www.baidu.com</SEName>
+		</SearchEngine>
+		<SearchEngine>
+			<SEName>www.baidu.com</SEName>
+		</SearchEngine>
+	</SearchEngines>
+	<Cookie_Hosts>
+		<Cookie_Host>
+			<name>dfsd</name>
+			<key>sdfasdf</key>
+		</Cookie_Host>
+                <Cookie_Host>
+			<name>dfsd1</name>
+			<key>sdfasdfddd</key>
+		</Cookie_Host>
+	</Cookie_Hosts>
+	<MessageSerialNo>111</MessageSerialNo>
+</msg_0x00>
+
+

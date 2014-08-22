@@ -133,7 +133,7 @@ public class UcRepositoryKit {
                                 returnMessageNo(file.getMessageNo());
                                 return log;
                             }
-                       
+
                         }
                     });
             return log1;
@@ -249,12 +249,12 @@ public class UcRepositoryKit {
 
     private void returnMessageNo(int messageNo) {
         try {
-
             try {
                 Dao<MessageNoPoolBean, Long> dao = repository.getMessageNoDao();
                 MessageNoPoolBean msg = new MessageNoPoolBean();
                 msg.setNo(messageNo);
-                dao.createIfNotExists(msg);
+                dao.delete(msg);
+//                dao.createIfNotExists(msg);
             } finally {
 
             }
@@ -267,15 +267,28 @@ public class UcRepositoryKit {
         try {
             try {
                 final Dao<MessageNoPoolBean, Long> dao = repository.getMessageNoDao();
-                final MessageNoPoolBean msgNo = dao.queryForId(dao.queryRawValue("select MIN(no) from MESSAGENOPOOL"));
-                final MessageNoPoolBean msg = TransactionManager.callInTransaction(repository.getConnectionSource(),
-                        new Callable<MessageNoPoolBean>() {
-                            public MessageNoPoolBean call() throws Exception {
-                                dao.delete(msgNo);
-                                return msgNo;
-                            }
-                        });
-                return msg.getNo();
+                long tmp = dao.queryRawValue("select min(65535-no) as tno from MESSAGENOPOOL");
+                if (tmp == 65535) {
+                    MessageNoPoolBean msg = new MessageNoPoolBean();
+                    msg.setNo(1);
+                    dao.createIfNotExists(msg);
+                    return msg.getNo();
+                } else {
+                    long max = dao.queryRawValue("select max(no) as tno from MESSAGENOPOOL");
+                    long tt = 65535 - tmp;
+                    if (tt < max) {
+                        MessageNoPoolBean msg = new MessageNoPoolBean();
+                        msg.setNo((int) tt);
+                        dao.createIfNotExists(msg);
+                        return msg.getNo();
+                    } else {
+                        MessageNoPoolBean msg = new MessageNoPoolBean();
+                        msg.setNo((int) (max + 1));
+                        dao.createIfNotExists(msg);
+                        return (int) max;
+                    }
+                }
+
             } finally {
             }
         } catch (SQLException ex) {
@@ -363,6 +376,42 @@ public class UcRepositoryKit {
             final Dao<PolicyBean, Long> dao = repository.getSvnFileDao();
 
             QueryBuilder<PolicyBean, Long> qb = dao.queryBuilder();
+            
+            qb.groupBy("messageNo").groupBy("id").where().eq("isDeleted", "false").and().eq("isNewest", "true");
+            
+            return qb.query();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UcRepositoryKit.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<PolicyBean>();
+        } finally {
+        }
+    }
+    
+    public long checkOutHEADCount() {
+        try {
+            final Dao<PolicyBean, Long> dao = repository.getSvnFileDao();
+
+            QueryBuilder<PolicyBean, Long> qb = dao.queryBuilder();
+            
+            long count = qb.groupBy("messageNo").groupBy("id").where().eq("isDeleted", "false").and().eq("isNewest", "true").query().size();
+            
+            return count;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UcRepositoryKit.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        } finally {
+        }
+    }
+    
+    public List<PolicyBean> checkOutHEAD(int pageCount, int page) {
+        try {
+            final Dao<PolicyBean, Long> dao = repository.getSvnFileDao();
+
+            QueryBuilder<PolicyBean, Long> qb = dao.queryBuilder();
+            qb.offset((long)(page-1)*pageCount);
+            qb.limit((long)pageCount);
             qb.groupBy("messageNo").groupBy("id").where().eq("isDeleted", "false").and().eq("isNewest", "true");
 
             return qb.query();

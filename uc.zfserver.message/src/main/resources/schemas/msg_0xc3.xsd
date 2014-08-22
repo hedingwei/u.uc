@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0xc3"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0xc3" elementFormDefault="qualified">
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+	<xs:element name="Type_0xc3">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				DPI 设备策略同步响应
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="MessageType" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="MessageSerialNo" type="u:UINT4"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="ChangedMessages" maxOccurs="1"
+							minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									本MessageType两个版本间发生变化的策略数，ChangedMessages子元素个数对应ChangedMessageNum字段，2
+									Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ChangedMessage" maxOccurs="unbounded"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ChangedMessageNo" type="u:UINT2"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="MessageChangeType" type="u:UINT1"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="MessageContents" type="string"
+													maxOccurs="1" minOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

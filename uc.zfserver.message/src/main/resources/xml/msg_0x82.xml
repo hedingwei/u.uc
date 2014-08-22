@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x82 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x82" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x82 ../xsd/msg_0x82.xsd ">
+	<Bind_Action>0</Bind_Action>
+	<UserName>UserName</UserName>
+	<IP_Segments>
+		<IP_Segment>
+			<UserIP>
+				<u:IPType>IPv4</u:IPType>
+				<u:IPv4Address>0.0.0.0</u:IPv4Address>
+			</UserIP>
+			<UserIP_Prefix>0</UserIP_Prefix>
+		</IP_Segment>
+		<IP_Segment>
+			<UserIP>
+				<u:IPType>IPv4</u:IPType>
+				<u:IPv4Address>0.0.0.0</u:IPv4Address>
+			</UserIP>
+			<UserIP_Prefix>0</UserIP_Prefix>
+		</IP_Segment>
+	</IP_Segments>
+</Type_0x82>

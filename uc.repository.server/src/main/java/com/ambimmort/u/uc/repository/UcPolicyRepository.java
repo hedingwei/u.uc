@@ -14,6 +14,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.h2.store.fs.FileUtils;
+import org.opensaml.xml.util.Base64;
 
 /**
  *
@@ -35,7 +37,7 @@ public class UcPolicyRepository {
 
     private long createTime;
     private RepositoryEntry entry;
-    private static String dir = "C:\\Users\\定巍\\Downloads\\test";
+    private static String dir = "repo";
     private JdbcPooledConnectionSource connectionSource = null;
     private Dao<MessageNoPoolBean, Long> messageNoDao = null;
     private Dao<PolicyBean, Long> svnFileDao = null;
@@ -53,26 +55,30 @@ public class UcPolicyRepository {
             return repo;
         }
     }
-    
-    public static List<UcPolicyRepository> getAllRepositorys(){
+
+    public static List<UcPolicyRepository> getAllRepositorys() {
         List<UcPolicyRepository> list = new ArrayList<UcPolicyRepository>();
-        for(UcPolicyRepository i:instances.values()){
+        for (UcPolicyRepository i : instances.values()) {
             list.add(i);
         }
         return list;
     }
-    
-    public static void init(){
+
+    public static void init() {
         File baseDirFile = new File(dir);
-        for(File typeDir:baseDirFile.listFiles()){
+        if(!baseDirFile.exists()){
+            baseDirFile.mkdirs();
+        }
+        for (File typeDir : baseDirFile.listFiles()) {
             String typeName = typeDir.getName();
-            for(File instanceFile:typeDir.listFiles()){
-                UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry(dir, typeName, instanceFile.getName()), false);
+            if (typeDir.isDirectory()) {
+                for (File instanceFile : typeDir.listFiles()) {
+                    UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry(dir, typeName, instanceFile.getName()), false);
+                }
             }
         }
-        
+
     }
-            
 
     public UcPolicyRepository(RepositoryEntry entry, boolean initialize) {
         this.entry = entry;
@@ -152,7 +158,7 @@ public class UcPolicyRepository {
                     public Void call() throws Exception {
                         StringBuilder sb = new StringBuilder();
                         sb.append("INSERT INTO `MESSAGENOPOOL` (`no` ) VALUES ");
-                        for (int i = 0; i < 20; i++) {
+                        for (int i = 0; i < 1; i++) {
                             sb.append("(").append(i).append("),");
                             if (i % 2000 == 0) {
                                 sb.deleteCharAt(sb.length() - 1);
@@ -318,7 +324,7 @@ public class UcPolicyRepository {
         this.connectionSource = connectionSource;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
 
         FileAppender fa = new FileAppender();
         fa.setName("FileLogger");
@@ -328,20 +334,21 @@ public class UcPolicyRepository {
         fa.setAppend(true);
         fa.activateOptions();
         Logger.getRootLogger().addAppender(fa);
-        
-        UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("C:\\Users\\定巍\\Downloads\\test", "0x00", "db1"), true);
+
+        UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", "0x00", "GreeNet-DPI"), true);
         UcRepositoryKit kit = repo.getSvnKit();
-        RepositoryOperationLogBean log0 = kit.create("sdfsdf");
-        RepositoryOperationLogBean log1 = kit.create("abc");
-        kit.update(log1.getSvnFile().getMessageNo(), "abc1");
-        RepositoryOperationLogBean log = kit.create("bbb");
-        kit.update(log.getSvnFile().getMessageNo(), "cccc");
+        
+        RepositoryOperationLogBean log0 = kit.create(Base64.encodeBytes("dfkjsldf".getBytes("utf-8")));
+        RepositoryOperationLogBean log1 = kit.create(Base64.encodeBytes("abc".getBytes("utf-8")));
 
-        kit.delete(log.getSvnFile().getMessageNo());
-        kit.delete(log0.getSvnFile().getMessageNo());
+        kit.update(log1.getSvnFile().getMessageNo(), Base64.encodeBytes("abd".getBytes("utf-8")));
 
-        log = kit.create("recreate");
-        log = kit.create("recreate1");
+        RepositoryOperationLogBean log = kit.create(Base64.encodeBytes("ddd".getBytes("utf-8")));
+
+        kit.update(log.getSvnFile().getMessageNo(),Base64.encodeBytes("ccc".getBytes("utf-8")));
+
+        log = kit.create(Base64.encodeBytes("recreate1".getBytes("utf-8")));
+        log = kit.create(Base64.encodeBytes("recreate2".getBytes("utf-8")));
 
         kit.dumpSVNFile();
         kit.dumpSVNLog();
@@ -384,16 +391,15 @@ public class UcPolicyRepository {
                     break;
             }
         }
-        
+
         System.out.println("=====================");
-        System.out.println(kit.getMessageWithLog(0));
+//        System.out.println(kit.getMessageWithLog(0));
         System.out.println(kit.getMessageWithLog(1));
         System.out.println(kit.getMessageWithLog(2));
         System.out.println("=====================");
-        for(RepositoryOperationLogBean vlog:kit.getMessageLogs(0)){
+        for (RepositoryOperationLogBean vlog : kit.getMessageLogs(1)) {
             System.out.println(vlog);
         }
-        
         repo.close();
     }
 

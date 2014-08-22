@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -34,3 +35,12 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+/uc.zf.bean.webservice/target/
+/uc.zf.bean/target/
+/uc.zfserver.bean/target/
+/uc.zfserver/target/
+/uc.repository.bean/target/
+/uc.repository.server/target/
+/uc.zfserver.web/target/
+/uc.zfserver.message/target/
+/uc.dpi.simulator/target/

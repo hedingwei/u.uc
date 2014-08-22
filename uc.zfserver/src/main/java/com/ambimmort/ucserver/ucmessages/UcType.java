@@ -46,8 +46,16 @@ public abstract class UcType {
         return new UObject();
     }
 
-    public static UArray newUArray() {
-        return new UArray();
+    public static UArray_UINT1 newUArray_UINT1() {
+        return new UArray_UINT1();
+    }
+
+    public static UArray_UINT2 newUArray_UINT2() {
+        return new UArray_UINT2();
+    }
+
+    public static UArray_UINT4 newUArray_UINT4() {
+        return new UArray_UINT4();
     }
 
     public static UINT1 newUINT1(int uByteValue) throws UcTypeException {
@@ -248,7 +256,7 @@ public abstract class UcType {
         public UObject(byte[] data) {
             super(data);
         }
-        
+
         public UObject(byte[] data, int offset, int length) {
             super(data, offset, length);
         }
@@ -287,19 +295,19 @@ public abstract class UcType {
 
     }
 
-    public static class UArray extends UcType {
+    public static class UArray_UINT1 extends UcType {
 
         private ArrayList<UcType> list = new ArrayList<UcType>();
 
-        public UArray(byte[] data) {
+        public UArray_UINT1(byte[] data) {
             super(data);
         }
-        
-        public UArray(byte[] data, int offset, int length) {
+
+        public UArray_UINT1(byte[] data, int offset, int length) {
             super(data, offset, length);
         }
 
-        public UArray() {
+        public UArray_UINT1() {
             super(null);
         }
 
@@ -311,6 +319,117 @@ public abstract class UcType {
         public byte[] getBytes() {
             if (super.data == null) {
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
+                try {
+                    os.write(UcType.newUINT1(list.size()).getBytes());
+                } catch (UcTypeException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (UcType field : list) {
+                    try {
+                        os.write(field.getBytes());
+                    } catch (IOException ex) {
+                        Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    os.close();
+                } catch (Exception e) {
+
+                }
+                super.data = os.toByteArray();
+
+            }
+            return super.data;
+
+        }
+
+    }
+
+    public static class UArray_UINT2 extends UcType {
+
+        private ArrayList<UcType> list = new ArrayList<UcType>();
+
+        public UArray_UINT2(byte[] data) {
+            super(data);
+        }
+
+        public UArray_UINT2(byte[] data, int offset, int length) {
+            super(data, offset, length);
+        }
+
+        public UArray_UINT2() {
+            super(null);
+        }
+
+        public void push(UcType aUcTypeValue) {
+            list.add(aUcTypeValue);
+        }
+
+        @Override
+        public byte[] getBytes() {
+            if (super.data == null) {
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                try {
+                    os.write(UcType.newUINT2(list.size()).getBytes());
+                } catch (UcTypeException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (UcType field : list) {
+                    try {
+                        os.write(field.getBytes());
+                    } catch (IOException ex) {
+                        Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+                    os.close();
+                } catch (Exception e) {
+
+                }
+                super.data = os.toByteArray();
+
+            }
+            return super.data;
+
+        }
+
+    }
+
+    public static class UArray_UINT4 extends UcType {
+
+        private ArrayList<UcType> list = new ArrayList<UcType>();
+
+        public UArray_UINT4(byte[] data) {
+            super(data);
+        }
+
+        public UArray_UINT4(byte[] data, int offset, int length) {
+            super(data, offset, length);
+        }
+
+        public UArray_UINT4() {
+            super(null);
+        }
+
+        public void push(UcType aUcTypeValue) {
+            list.add(aUcTypeValue);
+        }
+
+        @Override
+        public byte[] getBytes() {
+            if (super.data == null) {
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                try {
+                    os.write(UcType.newUINT4(list.size()).getBytes());
+                } catch (UcTypeException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 for (UcType field : list) {
                     try {
                         os.write(field.getBytes());
@@ -333,7 +452,7 @@ public abstract class UcType {
     }
 
     public static void main(String[] args) {
-        UArray obj = UcType.newUArray();
+        UArray_UINT1 obj = UcType.newUArray_UINT1();
         try {
             obj.push(UcType.newUINT1(0));
         } catch (UcTypeException ex) {

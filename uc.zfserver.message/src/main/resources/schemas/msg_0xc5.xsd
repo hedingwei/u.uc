@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0xc5"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0xc5" elementFormDefault="qualified">
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+	<xs:element name="Type_0xc5">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				DPI 设备状态查询回应(静态信息)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="SoftwareVersion" type="u:UINT4"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="DeploySiteName" type="string"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="Deploy_Mode" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="Total_Capability" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="SlotNum" type="u:UINT1" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="PreProcSlotNum" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="AnalysisSlotNum" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="GPSlotNum" type="u:UINT1" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="PortsTypes" maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									本DPI设备所配备的端口类型数，PortsTypes的子元素个数对应PortsTypeNum 字段，1 Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="PortsType" maxOccurs="unbounded"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="PortType"></xs:element>
+												<xs:element name="Ports" maxOccurs="1" minOccurs="1">
+													<xs:annotation>
+														<xs:documentation xml:lang="zh">
+															属于本类型的端口数，Ports的子元素个数对应PortsNum 字段，1
+															Bytes
+														</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Port" maxOccurs="unbounded"
+																minOccurs="0">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="PortNo" type="u:UINT1"
+																			maxOccurs="1" minOccurs="1"></xs:element>
+																		<xs:element name="PortDescription" type="string"
+																			maxOccurs="1" minOccurs="1"></xs:element>
+																		<xs:element name="M_LinkID" type="u:UINT1"
+																			maxOccurs="1" minOccurs="1"></xs:element>
+																		<xs:element name="M_LinkDesc" type="string"
+																			maxOccurs="1" minOccurs="1"></xs:element>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

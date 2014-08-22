@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x42 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x42" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x42 ../xsd/msg_0x42.xsd ">
+	<C_type>0</C_type>
+	<C_TimeSlots>
+		<C_TimeSlot>
+			<C_Starttime>0</C_Starttime>
+			<C_Stoptime>0</C_Stoptime>
+		</C_TimeSlot>
+	</C_TimeSlots>
+	<Adv_URL>Adv_URL</Adv_URL>
+	<Drop_Protocol>0</Drop_Protocol>
+	<Packet_Drop_Ratio>0</Packet_Drop_Ratio>
+	<MessageSerialNo>00000000</MessageSerialNo>
+</Type_0x42>

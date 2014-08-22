@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x41"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x41" elementFormDefault="qualified">
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+	<xs:element name="Type_0x41">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.4.2 Web 信息推送策略
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="AdvFrame_URL" type="string"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="Adv_ID" type="u:UINT2" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="UserType" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="UserName" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="UAccessURL" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="RNumber" type="u:UINT4" maxOccurs="1"
+							minOccurs="1"></xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

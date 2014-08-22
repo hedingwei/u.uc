@@ -5,8 +5,8 @@
  */
 package com.ambimmort.u.uc.repository;
 
-import com.ambimmort.u.uc.repository.bean.webservice.RepositoryManagementWebServiceBean;
-import com.ambimmort.u.uc.repository.webservice.RepositoryManagementWebServiceBeanImpl;
+import com.ambimmort.u.uc.repository.bean.webservice.rmapi.RepositoryManagementWebServiceBean;
+import com.ambimmort.u.uc.repository.webservice.rmapi.RepositoryManagementWebServiceBeanImpl;
 import java.util.Arrays;
 import javax.ws.rs.ext.RuntimeDelegate;
 import org.apache.cxf.bus.spring.SpringBus;

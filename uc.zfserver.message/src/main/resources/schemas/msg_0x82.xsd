@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x82"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:tns="http://www.ambimmort.com/msg_0x82" elementFormDefault="qualified">
+
+	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
+	</import>
+
+	<xs:element name="Type_0x82">
+		<xs:annotation>
+			<xs:documentation xml:lang="zh">
+				5.5.3 IP 地址段用户信息下发
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="u:Type_UcMessage">
+					<xs:sequence>
+						<xs:element name="Bind_Action" type="u:UINT1"
+							maxOccurs="1" minOccurs="1"></xs:element>
+						<xs:element name="UserName" type="string" maxOccurs="1"
+							minOccurs="1"></xs:element>
+						<xs:element name="IP_Segments" maxOccurs="1" minOccurs="1">
+							<xs:annotation>
+								<xs:documentation xml:lang="zh">
+									本用户所拥有的地址段数，IP_Segments的子元素个数对应IP_SegmentNum字段，2Bytes
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="IP_Segment" maxOccurs="unbounded"
+										minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="UserIP" type="u:Type_IP"
+													maxOccurs="1" minOccurs="1"></xs:element>
+												<xs:element name="UserIP_Prefix" type="u:UINT1"
+													maxOccurs="1" minOccurs="1"></xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</schema>

@@ -5,6 +5,7 @@
  */
 package com.ambimmort.u.uc.repository.bean;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +23,7 @@ public class PolicyBean implements Comparable<PolicyBean>{
     @DatabaseField(index = true)
     private int messageNo = 1;
 
-    @DatabaseField()
+    @DatabaseField(dataType = DataType.LONG_STRING)
     private String content;
 
     @DatabaseField(defaultValue = "false", canBeNull = false, index = true)
