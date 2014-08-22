@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>XmlBeanUtil</artifactId>
+            <artifactId>uc.zfserver.message</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

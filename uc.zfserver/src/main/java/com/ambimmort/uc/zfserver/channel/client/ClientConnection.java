@@ -5,7 +5,6 @@
  */
 package com.ambimmort.uc.zfserver.channel.client;
 
-import com.ambimmort.uc.zfserver.channel.client.ClientChannelReconnectHandler;
 import com.ambimmort.uc.zfserver.channel.ConnectionListener;
 import com.ambimmort.uc.zfserver.bean.ConnectionState;
 import com.ambimmort.uc.zfserver.codec.UcProtocolCodecFactory;
