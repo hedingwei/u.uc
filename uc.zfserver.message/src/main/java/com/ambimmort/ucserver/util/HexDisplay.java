@@ -11,6 +11,10 @@ package com.ambimmort.ucserver.util;
  */
 public class HexDisplay {
 
+    public static void print(byte[] data){
+        System.out.println(getHex(data));
+    }
+    
     public static String getHex(byte[] data) {
         StringBuilder sb = new StringBuilder();
         String tmp = null;
@@ -21,7 +25,7 @@ public class HexDisplay {
                 }
             }
             {
-                tmp = Integer.toHexString(data[i]);
+                tmp = Integer.toHexString(data[i]).replace("f", "");
                 if (tmp.length() == 1) {
                     tmp = "0" + tmp;
                 }

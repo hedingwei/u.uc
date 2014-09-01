@@ -5,35 +5,49 @@
  */
 package com.ambimmort.uc.zfserver.channel.server;
 
-import com.ambimmort.uc.zfserver.channel.ConnectionListener;
-import com.ambimmort.uc.zfserver.bean.ConnectionState;
-import com.ambimmort.uc.zfserver.DPIEndPoint;
+import com.ambimmort.uc.zfserver.type.ConnectionState;
+import com.ambimmort.uc.zfserver.component.zfserver.DPIEndPoint;
 import org.apache.mina.core.session.IoSession;
 
 /**
  * @author 定巍
  */
-public class ServerChannel implements ConnectionListener {
+public class ServerChannel {
 
     public ConnectionState state = ConnectionState.DisConnected;
     private DPIEndPoint dpiEndPoint = null;
+
+    private IoSession session = null;
+
+    public void setState(ConnectionState state) {
+        this.state = state;
+        dpiEndPoint.getDpiEndPointBean().setServerChannelState(state);
+    }
+
+    public ConnectionState getState() {
+        return state;
+    }
+
+    public void stopMe() {
+        if (session != null) {
+            session.close(true);
+        }
+    }
+
+    public IoSession getSession() {
+        return session;
+    }
+
+    public void setSession(IoSession session) {
+        this.session = session;
+    }
 
     public ServerChannel(DPIEndPoint dpiEndPoint) {
         this.dpiEndPoint = dpiEndPoint;
     }
 
-    @Override
-    public void onConnected(IoSession session) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DPIEndPoint getDpiEndPoint() {
+        return dpiEndPoint;
     }
 
-    @Override
-    public void onConnecting(IoSession session) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void onDisConnected(IoSession session) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

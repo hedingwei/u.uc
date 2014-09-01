@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0xca messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.ambimmort.com/msg_0xca" xmlns:u="http://www.ambimmort.com/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.ambimmort.com/msg_0xca ../xsd/msg_0xca.xsd ">
+	<Server_IP>
+		<u:IPType>IPv4</u:IPType>
+		<u:IPv4Address>0.0.0.0</u:IPv4Address>
+	</Server_IP>
+	<Server_Port>22</Server_Port>
+	<UserName>UserName</UserName>
+	<Password>Password</Password>
+	<IPAT_FileName>IPAT_FileName</IPAT_FileName>
+	<IPAT_SerialNo>0</IPAT_SerialNo>
+</Type_0xca>

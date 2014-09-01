@@ -44,3 +44,6 @@ Icon
 /uc.zfserver.web/target/
 /uc.zfserver.message/target/
 /uc.dpi.simulator/target/
+/uc.ftp/target/
+/uc.zfserver.util.client/target/
+/uc.zfserver.tester/target/

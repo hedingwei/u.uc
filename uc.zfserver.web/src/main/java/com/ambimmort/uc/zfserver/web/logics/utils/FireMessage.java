@@ -50,7 +50,7 @@ public class FireMessage extends HttpServlet {
         Map<String, Object> pargs = new HashMap<String, Object>();
         pargs.put("request", request);
         pargs.put("session", request.getSession());
-        pargs.put("context", request.getServletContext());
+//        pargs.put("context", request.getServletContext());
         pargs.put("args", args);
         MessageDriven.getInstance().fire(event, pargs);
     }

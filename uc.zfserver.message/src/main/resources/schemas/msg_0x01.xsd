@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x00"
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ambimmort.com/msg_0x01"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:u="http://www.ambimmort.com/UType"
-	xmlns:tns="http://www.ambimmort.com/msg_0x00" elementFormDefault="qualified">
+	xmlns:tns="http://www.ambimmort.com/msg_0x01" elementFormDefault="qualified">
 
 	<import namespace="http://www.ambimmort.com/UType" schemaLocation="UType.xsd">
 	</import>

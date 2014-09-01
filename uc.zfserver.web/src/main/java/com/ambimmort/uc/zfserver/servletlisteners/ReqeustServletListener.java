@@ -5,17 +5,9 @@
  */
 package com.ambimmort.uc.zfserver.servletlisteners;
 
-import com.ambimmort.uc.zfserver.db.util.PropertyUtil;
-import com.ambimmort.uc.zfserver.wsclient.reposerver.PolicyRepoClient;
-import com.ambimmort.uc.zfserver.wsclient.reposerver.PolicyRepoServerClient;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Web application lifecycle listener.

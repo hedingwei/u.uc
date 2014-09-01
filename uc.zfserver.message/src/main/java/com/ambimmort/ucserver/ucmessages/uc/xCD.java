@@ -174,4 +174,19 @@ public class xCD extends UcMsg {
             return sb.toString();
         }
 
+    @Override
+    public boolean isVersionManaged() {
+        return false;
+    }
+
+    @Override
+    public void setMessageSerialNo(UcType.UINT4 messageSerialNo) {
+        
+    }
+
+    @Override
+    public UcType.UINT4 getMessageSerialNo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     }

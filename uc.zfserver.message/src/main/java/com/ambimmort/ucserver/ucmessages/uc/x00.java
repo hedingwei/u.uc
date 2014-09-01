@@ -29,6 +29,7 @@ import org.apache.xmlbeans.XmlException;
  */
 public class x00 extends UcMsg {
 
+    
     private UcType.UINT2 Web_Hit_Threshold;
     private UcType.UINT2 KW_Threholds;
     private UcType.UArray_UINT1 SearchEngines;
@@ -37,13 +38,20 @@ public class x00 extends UcMsg {
 
     private Msg0X00Document document;
 
+    @Override
+    public boolean isVersionManaged() {
+        return true;
+    }
+
+    
+    public UcType.UINT4 getMessageSerialNo() {
+        return messageSerialNo;
+    }
+
     public void setMessageSerialNo(UcType.UINT4 serialNo) {
         this.messageSerialNo = serialNo;
     }
 
-    public UcType.UINT4 getMessageSerialNo() {
-        return messageSerialNo;
-    }
 
     @Override
     public void parseBytes(byte[] header, byte[] body) {
@@ -72,7 +80,7 @@ public class x00 extends UcMsg {
             SearchEngines.push(SEName_Length);
             recordPtr++;
 
-            UcType.UString_UINT1 SEName = new UcType.UString_UINT1(body, recordPtr - 1, SEName_Length.toByte()+1);
+            UcType.UString_UINT1 SEName = new UcType.UString_UINT1(body, recordPtr - 1, SEName_Length.toByte() + 1);
             recordPtr = recordPtr + SEName_Length.toByte();
 
             SearchEngines.push(SEName);
@@ -90,14 +98,13 @@ public class x00 extends UcMsg {
             UcType.UINT1 Cookie_Host_Name_Length = new UcType.UINT1(body, recordPtr, 1);
             recordPtr++;
 
-            UcType.UString_UINT1 Cookie_Host_Name = new UcType.UString_UINT1(body, recordPtr - 1, Cookie_Host_Name_Length.toByte()+1);
+            UcType.UString_UINT1 Cookie_Host_Name = new UcType.UString_UINT1(body, recordPtr - 1, Cookie_Host_Name_Length.toByte() + 1);
             recordPtr = recordPtr + Cookie_Host_Name_Length.toByte();
 
             UcType.UINT1 Cookie_Host_key_length = new UcType.UINT1(body, recordPtr, 1);
             recordPtr++;
-            UcType.UString_UINT1 Cookie_Host_key_value = new UcType.UString_UINT1(body, recordPtr - 1, Cookie_Host_key_length.toByte()+1);
+            UcType.UString_UINT1 Cookie_Host_key_value = new UcType.UString_UINT1(body, recordPtr - 1, Cookie_Host_key_length.toByte() + 1);
             recordPtr = recordPtr + Cookie_Host_key_length.toByte();
-
 
             CookieHost ch = chs.addNewCookieHost();
             ch.setName(Cookie_Host_Name.toString());
@@ -194,22 +201,20 @@ public class x00 extends UcMsg {
 
     public static void main(String[] args) {
         try {
+            
+            
+            
             Msg0X00Document document = Msg0X00Document.Factory.parse(new File("src/main/resources/xml/msg_0x00.xml"));
             Msg0X00 _0x00 = document.getMsg0X00();
 
             
-            
-            
             UcMsg.x00 x00 = new x00();
             x00.parseXML(document.toString());
             System.out.println(HexDisplay.getHex(x00.toBytes()));
-            
-            
-            
 
             UcMsg msg = new x00();
             msg.parseBytes(x00.getHeader().headerBytes, x00.getBodyBytes());
-            
+
             System.out.println(msg.toXML());
 
         } catch (XmlException ex) {

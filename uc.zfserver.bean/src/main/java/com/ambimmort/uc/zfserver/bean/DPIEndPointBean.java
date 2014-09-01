@@ -5,12 +5,10 @@
  */
 package com.ambimmort.uc.zfserver.bean;
 
-import com.j256.ormlite.dao.ForeignCollection;
+import com.ambimmort.uc.zfserver.type.ConnectionState;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.Set;
 
 /**
  *
@@ -23,35 +21,68 @@ public class DPIEndPointBean {
     private String name;
 
     @DatabaseField(index = true)
-    private String serverChannelIP;
+    private String devName;
+
+    @DatabaseField(index = true, canBeNull = false, defaultValue = "0")
+    private byte probeType;  //0x00:DPI; 0x01:EU
+
+    @DatabaseField(index = true, canBeNull = false, defaultValue = "")
+    private String deploySiteName;
+
+    @DatabaseField(index = true, canBeNull = false, defaultValue = "NonHouse_Id")
+    private String idcHouseId;
 
     @DatabaseField(index = true)
-    private int serverChannelPort;
+    private String ip;
 
     @DatabaseField(index = true)
-    private String clientChannelIP;
-
-    @DatabaseField(index = true)
-    private int clientChannelPort;
-
-    @DatabaseField(index = true)
-    private boolean isOn;
+    private int port;
 
     @DatabaseField(dataType = DataType.ENUM_INTEGER, index = true)
     private ConnectionState serverChannelState;
 
     @DatabaseField(dataType = DataType.ENUM_INTEGER, index = true)
     private ConnectionState clientChannelState;
+    
 
-    @ForeignCollectionField
-    private ForeignCollection<RepositoryEntryBean> repositories;
-
-    public int getClientChannelPort() {
-        return clientChannelPort;
+    public String getDevName() {
+        return devName;
     }
 
-    public void setClientChannelPort(int clientChannelPort) {
-        this.clientChannelPort = clientChannelPort;
+    public void setDevName(String devName) {
+        this.devName = devName;
+    }
+
+    public byte getProbeType() {
+        return probeType;
+    }
+
+    public void setProbeType(byte probeType) {
+        this.probeType = probeType;
+    }
+
+    public String getDeploySiteName() {
+        return deploySiteName;
+    }
+
+    public void setDeploySiteName(String deploySiteName) {
+        this.deploySiteName = deploySiteName;
+    }
+
+    public String getIdcHouseId() {
+        return idcHouseId;
+    }
+
+    public void setIdcHouseId(String idcHouseId) {
+        this.idcHouseId = idcHouseId;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public ConnectionState getServerChannelState() {
@@ -70,44 +101,15 @@ public class DPIEndPointBean {
         this.clientChannelState = clientChannelState;
     }
 
-    public String getServerChannelIP() {
-        return serverChannelIP;
+    public DPIEndPointBean() {
     }
 
-    public void setServerChannelIP(String serverChannelIP) {
-        this.serverChannelIP = serverChannelIP;
+    public String getIp() {
+        return ip;
     }
 
-    public int getServerChannelPort() {
-        return serverChannelPort;
-    }
-
-    public void setServerChannelPort(int serverChannelPort) {
-        this.serverChannelPort = serverChannelPort;
-    }
-
-    public String getClientChannelIP() {
-        return clientChannelIP;
-    }
-
-    public void setClientChannelIP(String clientChannelIP) {
-        this.clientChannelIP = clientChannelIP;
-    }
-
-    public boolean isIsOn() {
-        return isOn;
-    }
-
-    public void setIsOn(boolean isOn) {
-        this.isOn = isOn;
-    }
-
-    public ForeignCollection<RepositoryEntryBean> getRepositories() {
-        return repositories;
-    }
-
-    public void setRepositories(ForeignCollection<RepositoryEntryBean> repositories) {
-        this.repositories = repositories;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public String getName() {
@@ -120,7 +122,12 @@ public class DPIEndPointBean {
 
     @Override
     public String toString() {
-        return "DPIEndPointBean{" + "name=" + name + ", serverChannelIP=" + serverChannelIP + ", serverChannelPort=" + serverChannelPort + ", clientChannelIP=" + clientChannelIP + ", isOn=" + isOn + ", repositories=" + repositories + '}';
+        return "DPIEndPointBean{" + "name=" + name + ", devName=" + devName + ", probeType=" + probeType + ", deploySiteName=" + deploySiteName + ", idcHouseId=" + idcHouseId + ", ip=" + ip + ", port=" + port + ", serverChannelState=" + serverChannelState + ", clientChannelState=" + clientChannelState + '}';
     }
+
+
+
+    
+    
 
 }

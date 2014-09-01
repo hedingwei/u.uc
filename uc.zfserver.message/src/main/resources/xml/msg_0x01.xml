@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <msg_0x01 messageNo="0" messageSequenceNo="0" messageSerialNo="0"
-	xmlns="http://www.example.org/msg_0x00" xmlns:u="http://www.example.org/UType"
+	xmlns="http://www.ambimmort.com/msg_0x01" xmlns:u="http://www.ambimmort.com/UType"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.example.org/msg_0x00 msg_0x01.xsd ">
-	<PacketType>0</PacketType>
-	<PacketSubtype>0</PacketSubtype>
+	xsi:schemaLocation="http://www.ambimmort.com/msg_0x01 msg_0x01.xsd ">
+	<PacketType>1</PacketType>
+	<PacketSubtype>2</PacketSubtype>
 	<R_StartTime>0</R_StartTime>
 	<R_EndTime>0</R_EndTime>
 	<R_Freq>1</R_Freq>
 	<R_DestIP>
 		<u:IPType>IPv4</u:IPType>
-		<u:IPv4Address>0.0.0.0</u:IPv4Address>
+		<u:IPv4Address>111.228.250.176</u:IPv4Address>
 	</R_DestIP>
-	<R_DestPort>50001</R_DestPort>
+	<R_DestPort>60002</R_DestPort>
 	<R_Method>0</R_Method>
-	<UserName>UserName</UserName>
-	<Password>user1234</Password>
-	<MessageSerialNo>00000000</MessageSerialNo>
+	<UserName></UserName>
+	<Password></Password>
+	<MessageSerialNo>1</MessageSerialNo>
 </msg_0x01>

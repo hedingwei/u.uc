@@ -17,41 +17,12 @@ public class RepositoryEntryBean {
 
     @DatabaseField(generatedId = true)
     private long id;
-    
-    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "DPIEndPointBean_Id")
-    private DPIEndPointBean endPoint;
-    
-    @DatabaseField(index = true)
+
+    @DatabaseField(uniqueCombo = true, uniqueIndex = true)
     private String type;
-    
-    @DatabaseField(index = true)
-    private String name;
 
-    public DPIEndPointBean getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(DPIEndPointBean endPoint) {
-        this.endPoint = endPoint;
-    }
-    
-    
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @DatabaseField(uniqueCombo = true, uniqueIndex = true)
+    private String instanceName;
 
     public long getId() {
         return id;
@@ -61,11 +32,20 @@ public class RepositoryEntryBean {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "RepositoryEntryBean{" + "id=" + id + ", type=" + type + ", name=" + name + '}';
+    public String getType() {
+        return type;
     }
 
-    
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getInstanceName() {
+        return instanceName;
+    }
+
+    public void setInstanceName(String instanceName) {
+        this.instanceName = instanceName;
+    }
+
 }

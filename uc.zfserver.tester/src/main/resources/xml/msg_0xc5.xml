@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0xc5 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0xc5" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0xc5 ../xsd/msg_0xc5.xsd ">
+	<SoftwareVersion>0</SoftwareVersion>
+	<DeploySiteName>DeploySiteName</DeploySiteName>
+	<Deploy_Mode>0</Deploy_Mode>
+	<Total_Capability>0</Total_Capability>
+	<SlotNum>0</SlotNum>
+	<PreProcSlotNum>0</PreProcSlotNum>
+	<AnalysisSlotNum>0</AnalysisSlotNum>
+	<GPSlotNum>0</GPSlotNum>
+	<PortsTypes>
+		<PortsType>
+			<PortType></PortType>
+			<Ports>
+				<Port>
+					<PortNo>0</PortNo>
+					<PortDescription>PortDescription</PortDescription>
+					<M_LinkID>0</M_LinkID>
+					<M_LinkDesc>M_LinkDesc</M_LinkDesc>
+				</Port>
+			</Ports>
+		</PortsType>
+		<PortsType>
+			<PortType></PortType>
+			<Ports>
+				<Port>
+					<PortNo>0</PortNo>
+					<PortDescription>PortDescription</PortDescription>
+					<M_LinkID>0</M_LinkID>
+					<M_LinkDesc>M_LinkDesc</M_LinkDesc>
+				</Port>
+			</Ports>
+		</PortsType>
+	</PortsTypes>
+</Type_0xc5>

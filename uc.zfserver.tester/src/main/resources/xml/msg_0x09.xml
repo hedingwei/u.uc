@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x09 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x09" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x09 ../xsd/msg_0x09.xsd ">
+	<MAppType>0</MAppType>
+	<MAppID>0</MAppID>
+	<MAppName>MAppName</MAppName>
+	<M_StartTime>0</M_StartTime>
+	<M_EndTime>0</M_EndTime>
+	<M_GroupNo>0</M_GroupNo>
+	<M_Direction>0</M_Direction>
+	<MessageSerialNo>0</MessageSerialNo>
+</Type_0x09>

@@ -6,10 +6,8 @@
 package com.ambimmort.uc.zfserver.channel.client;
 
 import com.ambimmort.uc.zfserver.channel.ConnectionListener;
-import com.ambimmort.uc.zfserver.bean.ConnectionState;
+import com.ambimmort.uc.zfserver.type.ConnectionState;
 import com.ambimmort.uc.zfserver.codec.UcProtocolCodecFactory;
-import com.ambimmort.uc.zfserver.codec.UcRawMessage;
-import com.ambimmort.ucserver.ucmessages.UcMsg;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,9 @@ public class ClientConnection extends Thread {
     private IoConnector connector = null;
     private EndPoint endPoint = null;
     private List<ConnectionListener> connectionListeners = new ArrayList<ConnectionListener>();
-
+    private boolean shouldStop = false;
+    
+    
     public void notifyReconnecting(IoSession session) {
         for (ConnectionListener l : connectionListeners) {
             l.onConnecting(session);
@@ -96,14 +96,14 @@ public class ClientConnection extends Thread {
         this.endPoint.setHost(host);
         this.endPoint.setPort(port);
         connector = new NioSocketConnector();
-        connector.setConnectTimeoutMillis(1000);
+        connector.setConnectTimeoutMillis(10000);
         connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new UcProtocolCodecFactory()));
         connector.setHandler(new ClientChannelReconnectHandler(this, handler));
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!shouldStop) {
             if (connetionState == ConnectionState.DisConnected) {
                 connect();
             } else {
@@ -114,6 +114,12 @@ public class ClientConnection extends Thread {
                 }
             }
         }
+    }
+    
+    public void stopMe(){
+        shouldStop = true;
+        if(this.session!=null)
+        this.session.close(true);
     }
 
     public synchronized void connect() {
@@ -153,17 +159,13 @@ public class ClientConnection extends Thread {
         public DPIHandler(ClientConnection connection) {
             this.connection = connection;
         }
+        
+        public DPIHandler() {
+            this.connection = connection;
+        }
 
-        @Override
-        public void messageReceived(IoSession session, Object message) throws Exception {
-            if (message instanceof UcRawMessage) {
-                UcRawMessage msg = (UcRawMessage) message;
-                if (msg.getMessageType() == (byte) 0xcd) {  // this is ack message
-                    UcMsg.xCD ack = new UcMsg.xCD();
-                    ack.parse(msg.getHeader(), msg.getBody());
-                    logger.log(Level.SEVERE, ack.toString());
-                }
-            }
+        public void setConnection(ClientConnection connection) {
+            this.connection = connection;
         }
 
         @Override
@@ -246,5 +248,7 @@ public class ClientConnection extends Thread {
         }
 
     }
+    
+    
 
 }

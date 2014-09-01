@@ -11,7 +11,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Logger;
 import org.apache.mina.core.filterchain.IoFilterAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -165,7 +164,6 @@ public class WhitelistFilter extends IoFilterAdapter {
 		if (remoteAddress instanceof InetSocketAddress) {
 			InetAddress address = ((InetSocketAddress) remoteAddress).getAddress();
 
-			// check all subnets
 			for (Subnet subnet : whitelist) {
 				if (subnet.inSubnet(address)) {
 					return true;

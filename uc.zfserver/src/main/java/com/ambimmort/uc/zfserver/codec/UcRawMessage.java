@@ -23,13 +23,13 @@ public class UcRawMessage {
     private byte messageType;
     private String sessionId;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public void normalize() {
         messageType = header[4];

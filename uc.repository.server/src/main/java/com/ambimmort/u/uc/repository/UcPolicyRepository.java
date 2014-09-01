@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -66,7 +67,7 @@ public class UcPolicyRepository {
 
     public static void init() {
         File baseDirFile = new File(dir);
-        if(!baseDirFile.exists()){
+        if (!baseDirFile.exists()) {
             baseDirFile.mkdirs();
         }
         for (File typeDir : baseDirFile.listFiles()) {
@@ -335,71 +336,95 @@ public class UcPolicyRepository {
         fa.activateOptions();
         Logger.getRootLogger().addAppender(fa);
 
-        UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", "0x00", "GreeNet-DPI"), true);
+        UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", "0x01", "GreeNet-1"), false);
         UcRepositoryKit kit = repo.getSvnKit();
         
-        RepositoryOperationLogBean log0 = kit.create(Base64.encodeBytes("dfkjsldf".getBytes("utf-8")));
-        RepositoryOperationLogBean log1 = kit.create(Base64.encodeBytes("abc".getBytes("utf-8")));
 
-        kit.update(log1.getSvnFile().getMessageNo(), Base64.encodeBytes("abd".getBytes("utf-8")));
+        String s = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+"<msg_0x01 messageNo=\"0\" messageSequenceNo=\"0\" messageSerialNo=\"0\"\n" +
+"	xmlns=\"http://www.ambimmort.com/msg_0x01\" xmlns:u=\"http://www.ambimmort.com/UType\"\n" +
+"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+"	xsi:schemaLocation=\"http://www.ambimmort.com/msg_0x01 msg_0x01.xsd \">\n" +
+"	<PacketType>1</PacketType>\n" +
+"	<PacketSubtype>2</PacketSubtype>\n" +
+"	<R_StartTime>0</R_StartTime>\n" +
+"	<R_EndTime>0</R_EndTime>\n" +
+"	<R_Freq>1</R_Freq>\n" +
+"	<R_DestIP>\n" +
+"		<u:IPType>IPv4</u:IPType>\n" +
+"		<u:IPv4Address>111.228.250.176</u:IPv4Address>\n" +
+"	</R_DestIP>\n" +
+"	<R_DestPort>60002</R_DestPort>\n" +
+"	<R_Method>0</R_Method>\n" +
+"	<UserName></UserName>\n" +
+"	<Password></Password>\n" +
+"	<MessageSerialNo>1</MessageSerialNo>\n" +
+"</msg_0x01>\n" +
+"";
 
-        RepositoryOperationLogBean log = kit.create(Base64.encodeBytes("ddd".getBytes("utf-8")));
-
-        kit.update(log.getSvnFile().getMessageNo(),Base64.encodeBytes("ccc".getBytes("utf-8")));
-
-        log = kit.create(Base64.encodeBytes("recreate1".getBytes("utf-8")));
-        log = kit.create(Base64.encodeBytes("recreate2".getBytes("utf-8")));
-
-        kit.dumpSVNFile();
-        kit.dumpSVNLog();
-
-        for (PolicyBean f : kit.checkOutHEAD()) {
-            System.out.println(f);
-        }
-
-        System.out.println(repo.getHEAD());
-        Map<Integer, RepositoryOperationBean> acks = kit.update(2, repo.getHEAD());
-        for (Integer f : acks.keySet()) {
-            switch (f) {
-                case 0:
-                    System.out.println("ADD " + acks.get(f));
-                    break;
-                case 1:
-                    System.out.println("UPDATE " + acks.get(f));
-                    break;
-                case 2:
-                    System.out.println("DELETE " + acks.get(f));
-                    break;
-                default:
-                    break;
-            }
-        }
-        System.out.println("--------------------");
-        acks = kit.update(3, repo.getHEAD());
-        for (Integer f : acks.keySet()) {
-            switch (f) {
-                case 0:
-                    System.out.println("ADD " + acks.get(f));
-                    break;
-                case 1:
-                    System.out.println("UPDATE " + acks.get(f));
-                    break;
-                case 2:
-                    System.out.println("DELETE " + acks.get(f));
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        System.out.println("=====================");
-//        System.out.println(kit.getMessageWithLog(0));
-        System.out.println(kit.getMessageWithLog(1));
-        System.out.println(kit.getMessageWithLog(2));
-        System.out.println("=====================");
-        for (RepositoryOperationLogBean vlog : kit.getMessageLogs(1)) {
-            System.out.println(vlog);
-        }
+        RepositoryOperationLogBean log0 = kit.create(Base64.encodeBytes(s.getBytes("utf-8")));
+        System.out.println(log0);
+//        RepositoryOperationLogBean log1 = kit.create(Base64.encodeBytes("abc".getBytes("utf-8")));
+//
+//        kit.update(log1.getSvnFile().getMessageNo(), Base64.encodeBytes("abd".getBytes("utf-8")));
+//
+//        RepositoryOperationLogBean log = kit.create(Base64.encodeBytes("ddd".getBytes("utf-8")));
+//
+//        kit.update(log.getSvnFile().getMessageNo(),Base64.encodeBytes("ccc".getBytes("utf-8")));
+//
+//        log = kit.create(Base64.encodeBytes("recreate1".getBytes("utf-8")));
+//        log = kit.create(Base64.encodeBytes("recreate2".getBytes("utf-8")));
+//
+//        kit.dumpSVNFile();
+//        kit.dumpSVNLog();
+//
+//        for (PolicyBean f : kit.checkOutHEAD()) {
+//            System.out.println(f);
+//        }
+//
+//        System.out.println(repo.getHEAD());
+//        Map<Integer, RepositoryOperationBean> acks = kit.update(2, repo.getHEAD());
+//        for (Integer f : acks.keySet()) {
+//            switch (f) {
+//                case 0:
+//                    System.out.println("ADD " + acks.get(f));
+//                    break;
+//                case 1:
+//                    System.out.println("UPDATE " + acks.get(f));
+//                    break;
+//                case 2:
+//                    System.out.println("DELETE " + acks.get(f));
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        System.out.println("--------------------");
+//        acks = kit.update(3, repo.getHEAD());
+//        for (Integer f : acks.keySet()) {
+//            switch (f) {
+//                case 0:
+//                    System.out.println("ADD " + acks.get(f));
+//                    break;
+//                case 1:
+//                    System.out.println("UPDATE " + acks.get(f));
+//                    break;
+//                case 2:
+//                    System.out.println("DELETE " + acks.get(f));
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//
+//        System.out.println("=====================");
+////        System.out.println(kit.getMessageWithLog(0));
+//        System.out.println(kit.getMessageWithLog(1));
+//        System.out.println(kit.getMessageWithLog(2));
+//        System.out.println("=====================");
+//        for (RepositoryOperationLogBean vlog : kit.getMessageLogs(1)) {
+//            System.out.println(vlog);
+//        }
         repo.close();
     }
 

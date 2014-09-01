@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x41 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x41" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x41 ../xsd/msg_0x41.xsd ">
+	<AdvFrame_URL>AdvFrame_URL</AdvFrame_URL>
+	<Adv_ID>0</Adv_ID>
+	<UserType>UserType</UserType>
+	<UserName>UserName</UserName>
+	<UAccessURL>UAccessURL</UAccessURL>
+	<RNumber>0</RNumber>
+</Type_0x41>

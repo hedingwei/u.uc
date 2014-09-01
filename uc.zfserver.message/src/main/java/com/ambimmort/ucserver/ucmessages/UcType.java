@@ -33,8 +33,6 @@ public abstract class UcType {
         this.data = new byte[length];
         System.arraycopy(data, offset, this.data, 0, length);
     }
-    
- 
 
     public byte[] getBytes() {
         return data;
@@ -138,9 +136,9 @@ public abstract class UcType {
         public UINT1(byte[] data, int offset, int length) {
             super(data, offset, length);
         }
-        
+
         public UINT1(byte[] data, int offset) {
-            super(data, offset, offset+1);
+            super(data, offset, 1);
         }
 
         @Override
@@ -150,6 +148,12 @@ public abstract class UcType {
 
         public byte toByte() {
             return super.data[0];
+        }
+
+        public int toInteger() {
+
+            return ByteConvert.bytesToUshort(new byte[]{0, super.data[0]});
+
         }
 
     }
@@ -163,9 +167,9 @@ public abstract class UcType {
         public UINT2(byte[] data, int offset, int length) {
             super(data, offset, length);
         }
-        
+
         public UINT2(byte[] data, int offset) {
-            super(data, offset, offset+2);
+            super(data, offset, offset + 2);
         }
 
         @Override
@@ -187,9 +191,9 @@ public abstract class UcType {
         public UINT4(byte[] data, int offset, int length) {
             super(data, offset, length);
         }
-        
+
         public UINT4(byte[] data, int offset) {
-            super(data, offset, offset+4);
+            super(data, offset, 4);
         }
 
         @Override
@@ -200,8 +204,9 @@ public abstract class UcType {
         public long toLong() {
             return ByteConvert.bytesToUint(super.data);
         }
-        public int toInteger(){
-            return (int)toLong();
+
+        public int toInteger() {
+            return (int) toLong();
         }
     }
 
@@ -217,11 +222,11 @@ public abstract class UcType {
 
         @Override
         public String toString() {
-            return new String(super.getBytes(), 1, super.data.length-1 , Charset.forName("utf-8"));
+            return new String(super.getBytes(), 1, super.data.length - 1, Charset.forName("utf-8"));
         }
 
         public long length() {
-            return ByteConvert.bytesToUbyte(new byte[]{super.data[0]});
+            return ByteConvert.bytesToUbyte(new byte[]{0, super.data[0]});
         }
     }
 
@@ -405,15 +410,80 @@ public abstract class UcType {
                 try {
                     os.close();
                 } catch (Exception e) {
-
                 }
                 super.data = os.toByteArray();
-
             }
             return super.data;
+        }
+    }
 
+    public static class IPv4 extends UcType {
+
+        public IPv4(byte[] data) {
+            super(data);
         }
 
+        public IPv4(byte[] data, int offset, int length) {
+            super(data, offset, length);
+        }
+
+        public IPv4(String ip) {
+            super(new byte[5]);
+            String[] com = ip.split("\\.");
+            super.data[0] = 4;
+            super.data[1] = (byte) Integer.parseInt(com[0]);
+            super.data[2] = (byte) Integer.parseInt(com[1]);
+            super.data[3] = (byte) Integer.parseInt(com[2]);
+            super.data[4] = (byte) Integer.parseInt(com[3]);
+        }
+    }
+
+    public static class UserName extends UcType {
+
+        public UserName(byte[] data) {
+            super(data);
+        }
+
+        public UserName(byte[] data, int offset, int length) {
+            super(data, offset, length);
+        }
+
+        public UserName(String username) {
+            super(new byte[8]);
+            byte[] d = null;
+            try {
+                d = username.getBytes("utf-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for (int i = 0; i < 8; i++) {
+                super.data[i] = i < d.length ? d[i] : 0;
+            }
+        }
+    }
+
+    public static class Password extends UcType {
+
+        public Password(byte[] data) {
+            super(data);
+        }
+
+        public Password(byte[] data, int offset, int length) {
+            super(data, offset, length);
+        }
+
+        public Password(String password) {
+            super(new byte[8]);
+            byte[] d = null;
+            try {
+                d = password.getBytes("utf-8");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(UcType.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for (int i = 0; i < 8; i++) {
+                super.data[i] = i < d.length ? d[i] : 0;
+            }
+        }
     }
 
     public static class UArray_UINT4 extends UcType {

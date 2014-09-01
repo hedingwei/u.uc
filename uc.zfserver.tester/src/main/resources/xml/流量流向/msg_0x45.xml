@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Type_0x45
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns='http://www.ambimmort.com/msg_0x43'
+    xsi:schemaLocation='http://www.ambimmort.com/msg_0x43 msg_0x45.xsd' messageNo="1" messageSerialNo="1" messageSequenceNo="1">
+    <Src_AreaGroups>
+        <Src_AreaGroup>
+            <Src_AreaGroup_ID>1</Src_AreaGroup_ID>
+            <AS_Num>1</AS_Num>
+            <AS_ID>0</AS_ID>
+            <Areas>
+                <Area>
+                    <Name>a1</Name>
+                </Area>
+            </Areas>
+        </Src_AreaGroup>
+    </Src_AreaGroups>
+    <Dest_AreaGroups>
+        <Dest_AreaGroup>
+            <Dest_AreaGroup_ID>1</Dest_AreaGroup_ID>
+            <AS_Num>1</AS_Num>
+            <AS_ID>0</AS_ID>
+            <Areas>
+                <Area>
+                    <Name>abcde</Name>
+                </Area>
+            </Areas>
+        </Dest_AreaGroup>
+    </Dest_AreaGroups>
+    <MessageSerialNo>1</MessageSerialNo>
+
+</Type_0x45>

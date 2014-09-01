@@ -25,7 +25,7 @@ public class HexDisplay {
                 if (tmp.length() == 1) {
                     tmp = "0" + tmp;
                 }
-                sb.append(tmp + "\t");
+                sb.append(tmp.substring(tmp.length()-2, tmp.length()) + "\t");
             }
 
         }

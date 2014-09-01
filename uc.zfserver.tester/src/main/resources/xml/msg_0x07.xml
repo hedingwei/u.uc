@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x07 messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x07" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x07 ../xsd/msg_0x07.xsd ">
+	<AppType>0</AppType>
+	<AppID>0</AppID>
+	<AppName>AppName</AppName>
+	<QoS_Label_Up>0</QoS_Label_Up>
+	<QoS_Label_Dn>0</QoS_Label_Dn>
+	<MessageSerialNo>0</MessageSerialNo>
+</Type_0x07>

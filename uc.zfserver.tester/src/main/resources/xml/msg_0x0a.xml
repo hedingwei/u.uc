@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Type_0x0a messageNo="0" messageSequenceNo="0"
+	messageSerialNo="0" xmlns="http://www.example.org/msg_0x10" xmlns:u="http://www.example.org/UType"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/msg_0x10 ../xsd/msg_0x0a.xsd ">
+	<AppType>0</AppType>
+	<AppID>0</AppID>
+	<AppName>AppName</AppName>
+	<U_Signatures>
+		<U_Signature>
+			<U_Protocol>0</U_Protocol>
+			<U_SourceIP>IPv4</U_SourceIP>
+			<U_SourcePort>0</U_SourcePort>
+			<U_DestIP>IPv4</U_DestIP>
+			<U_DestPort>0</U_DestPort>
+			<U_KWs />
+			<MessageSerialNo>00000000</MessageSerialNo>
+		</U_Signature>
+		<U_Signature>
+			<U_Protocol>0</U_Protocol>
+			<U_SourceIP>IPv4</U_SourceIP>
+			<U_SourcePort>0</U_SourcePort>
+			<U_DestIP>IPv4</U_DestIP>
+			<U_DestPort>0</U_DestPort>
+			<U_KWs></U_KWs>
+			<MessageSerialNo>00000000</MessageSerialNo>
+		</U_Signature>
+	</U_Signatures>
+</Type_0x0a>

@@ -66,7 +66,7 @@ public class BinaryFormPolicy extends HttpServlet {
         if(messageType.equals("0x00")){
             UcMsg.x00 x00 = new UcMsg.x00();
             try {
-                x00.setSerialNo(UcType.newUINT4(Long.parseLong(serialNo)));
+                x00.setMessageSerialNo(UcType.newUINT4(Long.parseLong(serialNo)));
             } catch (UcTypeException ex) {
                 Logger.getLogger(BinaryFormPolicy.class.getName()).log(Level.SEVERE, null, ex);
             }
