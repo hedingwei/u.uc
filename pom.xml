@@ -8,6 +8,7 @@
     <modules>
         <module>uc.zfserver</module>
         <module>uc.repository.server</module>
+        <module>uc.repository.client</module>
         <module>uc.zfserver.bean</module>
         <module>uc.zfserver.message</module>
     	<module>uc.zfserver.webui</module>

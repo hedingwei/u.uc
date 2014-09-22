@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="RepositoryManagementWebServiceBeanImplService" targetNamespace="http://rmapi.webservice.repository.uc.u.ambimmort.com/" xmlns:ns1="http://rmapi.webservice.bean.repository.uc.u.ambimmort.com/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://rmapi.webservice.repository.uc.u.ambimmort.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="http://localhost:9004/?wsdl=rmapi.wsdl" namespace="http://rmapi.webservice.bean.repository.uc.u.ambimmort.com/">
+    </wsdl:import>
+  <wsdl:binding name="RepositoryManagementWebServiceBeanImplServiceSoapBinding" type="ns1:rmapi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addPolicy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addPolicy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addPolicyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatePolicy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updatePolicy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updatePolicyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletePolicy">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deletePolicy">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePolicyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listRepositories">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listRepositories">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listRepositoriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createRepository">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createRepository">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createRepositoryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="test2">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="test2">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="test2Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUcRepoSuite">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUcRepoSuite">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUcRepoSuiteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="test3">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="test3">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="test3Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHeadPolicies">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHeadPolicies">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHeadPoliciesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHeadPoliciesWithLog">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHeadPoliciesWithLog">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHeadPoliciesWithLogResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createUcRepoSuite">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createUcRepoSuite">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createUcRepoSuiteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUpdatingOperationBeans">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUpdatingOperationBeans">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUpdatingOperationBeansResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="test1">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="test1">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="test1Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHeadPoliciesCount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHeadPoliciesCount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHeadPoliciesCountResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMessageLogs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getMessageLogs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMessageLogsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMessage">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getMessage">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMessageResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHeadVersion">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHeadVersion">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHeadVersionResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listRepositoryTypes">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listRepositoryTypes">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listRepositoryTypesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RepositoryManagementWebServiceBeanImplService">
+    <wsdl:port binding="tns:RepositoryManagementWebServiceBeanImplServiceSoapBinding" name="RepositoryManagementWebServiceBeanImplPort">
+      <soap:address location="http://localhost:9004/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
