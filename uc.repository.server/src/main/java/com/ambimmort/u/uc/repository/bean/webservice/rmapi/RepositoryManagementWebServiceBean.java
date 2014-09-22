@@ -10,7 +10,6 @@ import com.ambimmort.u.uc.repository.bean.RepositoryOperationBean;
 import com.ambimmort.u.uc.repository.bean.RepositoryOperationLogBean;
 import java.util.List;
 import javax.jws.WebService;
-
 /**
  *
  * @author 定巍

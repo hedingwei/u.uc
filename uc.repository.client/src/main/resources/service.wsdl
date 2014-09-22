@@ -168,7 +168,7 @@
   </wsdl:binding>
   <wsdl:service name="RepositoryManagementWebServiceBeanImplService">
     <wsdl:port binding="tns:RepositoryManagementWebServiceBeanImplServiceSoapBinding" name="RepositoryManagementWebServiceBeanImplPort">
-      <soap:address location="http://localhost:9004/"/>
+      
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

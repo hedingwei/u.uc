@@ -20,7 +20,7 @@
 							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
 							<wsdlOptions>
 								<wsdlOption>
-									<wsdl>${basedir}/src/main/resources/service.wsdl</wsdl>
+									<wsdl>${basedir}/src/main/resources/RepositoryManagementWebServiceBean.wsdl</wsdl>
 									<extraargs>
 										<extraarg>-p</extraarg>
 										<extraarg>com.ambimmort.uc.repository.services.client</extraarg>

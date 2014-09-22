@@ -5,13 +5,11 @@
  */
 package com.ambimmort.uc.zfserver.component.policyrepo;
 
-import com.ambimmort.uc.repository.services.client.RepositoryManagementWebServiceBeanImplService;
+import java.net.MalformedURLException;
+import java.net.URI;
+
+import com.ambimmort.uc.repository.services.client.RepositoryManagementWebServiceBeanService;
 import com.ambimmort.uc.repository.services.client.Rmapi;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFPropertyBeanDao;
-
-import javax.xml.namespace.QName;
-
-import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 
 /**
  *
@@ -19,13 +17,12 @@ import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
  */
 public class PolicyRepoClient {
 	
-	RepositoryManagementWebServiceBeanImplService service = null;
+	RepositoryManagementWebServiceBeanService service = null;
 	
 	Rmapi api = null;
 
     private static PolicyRepoClient instance = null;
 
-//    private org.apache.cxf.endpoint.Client client = null;
 
     public static PolicyRepoClient getInstance() {
         if (instance == null) {
@@ -47,28 +44,24 @@ public class PolicyRepoClient {
     }
 
     private PolicyRepoClient() {
-    	
-    	api = service.getRepositoryManagementWebServiceBeanImplPort();
+    	try {
+			service = new RepositoryManagementWebServiceBeanService(URI.create("http://localhost:9004/?wsdl").toURL());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+    	api = service.getRmapiPort();
 
         
     }
 
     public void refresh() {
        api = null;
-       api  = service.getRepositoryManagementWebServiceBeanImplPort();
+       api  = service.getRmapiPort();
     }
     
     public Rmapi getApi() {
 		return api;
 	}
 
-//
-//    public Object[] invoke(String method, Object... paras) throws Exception {
-//        return client.invoke(new QName("http://rmapi.webservice.bean.repository.uc.u.ambimmort.com/", method), paras);
-//    }
-//
-//    public void destroy() {
-//        client.destroy();
-//    }
 
 }
