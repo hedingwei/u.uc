@@ -5,32 +5,24 @@
  */
 package com.ambimmort.u.uc.repository;
 
-import com.ambimmort.u.uc.repository.bean.RepositoryOperationBean;
-import com.ambimmort.u.uc.repository.bean.MessageNoPoolBean;
-import com.ambimmort.u.uc.repository.bean.PolicyBean;
-import com.ambimmort.u.uc.repository.bean.RepositoryOperationLogBean;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.dao.GenericRawResults;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
-import com.j256.ormlite.misc.TransactionManager;
-import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.StatementBuilder;
-import com.j256.ormlite.stmt.UpdateBuilder;
-import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Stack;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.ambimmort.u.uc.repository.bean.MessageNoPoolBean;
+import com.ambimmort.u.uc.repository.bean.PolicyBean;
+import com.ambimmort.u.uc.repository.bean.RepositoryOperationBean;
+import com.ambimmort.u.uc.repository.bean.RepositoryOperationLogBean;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.misc.TransactionManager;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 
 /**
  *
@@ -44,7 +36,7 @@ public class UcRepositoryKit {
         this.repository = repository;
     }
 
-    public RepositoryOperationLogBean create(final String content) {
+    public RepositoryOperationLogBean create(final String content, final String comment) {
         try {
 
             final Dao<PolicyBean, Long> svnFileDao = repository.getSvnFileDao();
@@ -55,6 +47,7 @@ public class UcRepositoryKit {
             file.setMessageNo(getMessageNo());
             file.setIsDeleted(false);
             file.setIsNewest(true);
+            file.setComment(comment);
             svnFileDao.create(file);
 
             final RepositoryOperationLogBean log = new RepositoryOperationLogBean();
@@ -70,7 +63,7 @@ public class UcRepositoryKit {
         }
     }
 
-    public RepositoryOperationLogBean update(final int messageNo, final String content) {
+    public RepositoryOperationLogBean update(final int messageNo, final String content, final String comment) {
         try {
             final Dao<PolicyBean, Long> svnFileDao = repository.getSvnFileDao();
             final Dao<RepositoryOperationLogBean, Long> svnLogDao = repository.getSvnLogDao();
@@ -82,6 +75,7 @@ public class UcRepositoryKit {
             file.setContent(content);
             file.setMessageNo(messageNo);
             file.setIsNewest(true);
+            file.setComment(comment);
             final RepositoryOperationLogBean log = new RepositoryOperationLogBean();
             log.setCreateTime(System.currentTimeMillis());
             log.setOperation(RepositoryOperationLogBean.UPDATE);
@@ -302,7 +296,7 @@ public class UcRepositoryKit {
         try {
             qb.orderBy("id", true).where().le("id", endVersion).and().gt("id", startVersion);
             List<RepositoryOperationLogBean> logs = qb.query();
-            TreeMap<Integer, Vector<RepositoryOperationLogBean>> map = new TreeMap<Integer, Vector<RepositoryOperationLogBean>>();
+            Map<Integer, Vector<RepositoryOperationLogBean>> map = new TreeMap<Integer, Vector<RepositoryOperationLogBean>>();
             for (RepositoryOperationLogBean log : logs) {
                 if (map.containsKey(log.getSvnFile().getMessageNo())) {
                     map.get(log.getSvnFile().getMessageNo()).add(log);
@@ -368,7 +362,8 @@ public class UcRepositoryKit {
         } catch (SQLException ex) {
             Logger.getLogger(UcRepositoryKit.class.getName()).log(Level.SEVERE, null, ex);
             return new TreeMap<Integer, RepositoryOperationBean>();
-        }
+        } finally {
+		}
     }
 
     public List<PolicyBean> checkOutHEAD() {

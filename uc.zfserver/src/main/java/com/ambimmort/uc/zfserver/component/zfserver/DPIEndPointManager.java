@@ -6,7 +6,7 @@
 package com.ambimmort.uc.zfserver.component.zfserver;
 
 import com.ambimmort.uc.zfserver.bean.DPIEndPointBean;
-import com.ambimmort.uc.zfserver.component.database.dao.DPIEndPointBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,8 @@ public class DPIEndPointManager {
 
     public void refresh(){
         try {
-            for(DPIEndPointBean b:DPIEndPointBeanDao.getInstance().getDpiEndPointDao().queryForAll()){
+            for(DPIEndPointBean b:MyDaoManager.getInstance().getDao(DPIEndPointBean.class).queryForAll()){
+                if(!b.isEnable()) continue;
                 if(!endPoints.containsKey(b.getIp())){
                     endPoints.put(b.getIp(), new DPIEndPoint(b));   
                 }
@@ -56,12 +57,6 @@ public class DPIEndPointManager {
 
     public Map<String, DPIEndPoint> getEndPoints() {
         return endPoints;
-    }
-    
-    
-    
-    public static void main(String[] args){
-        
     }
     
 }

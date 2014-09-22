@@ -7,16 +7,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>uc.zfserver</module>
-        <module>uc.repository.bean</module>
         <module>uc.repository.server</module>
         <module>uc.zfserver.bean</module>
-        <module>uc.zfserver.ui</module>
-        <module>uc.zfserver.web</module>
         <module>uc.zfserver.message</module>
-        <module>uc.dpi.simulator</module>
-        <module>uc.ftp</module>
-        <module>uc.zfserver.util.client</module>
-        <module>uc.zfserver.tester</module>
+    	<module>uc.zfserver.webui</module>
+    	<module>uc.zfserver.client</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

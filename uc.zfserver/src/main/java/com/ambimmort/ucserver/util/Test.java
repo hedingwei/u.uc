@@ -8,7 +8,7 @@ package com.ambimmort.ucserver.util;
 import com.ambimmort.msg0X00.Msg0X00Document;
 import com.ambimmort.msg0X01.Msg0X01Document;
 import com.ambimmort.uc.zfserver.channel.client.ClientConnection;
-import com.ambimmort.uc.zfserver.codec.UcRawMessage;
+import com.ambimmort.uc.zfserver.component.transport.codec.UcRawMessage;
 import com.ambimmort.ucserver.ucmessages.UcMsg;
 import com.ambimmort.ucserver.ucmessages.UcType;
 import com.ambimmort.ucserver.ucmessages.exceptions.UcTypeException;

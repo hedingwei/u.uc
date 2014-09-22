@@ -37,14 +37,24 @@ public class DPIEndPointBean {
 
     @DatabaseField(index = true)
     private int port;
+    
+    @DatabaseField(index = true)
+    private boolean enable;
 
     @DatabaseField(dataType = DataType.ENUM_INTEGER, index = true)
     private ConnectionState serverChannelState;
 
     @DatabaseField(dataType = DataType.ENUM_INTEGER, index = true)
     private ConnectionState clientChannelState;
-    
 
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+    
     public String getDevName() {
         return devName;
     }

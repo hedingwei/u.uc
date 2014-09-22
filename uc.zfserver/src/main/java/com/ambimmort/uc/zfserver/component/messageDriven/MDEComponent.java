@@ -7,7 +7,7 @@ package com.ambimmort.uc.zfserver.component.messageDriven;
 
 import com.ambimmort.uc.zfserver.bean.ZFComponentBean;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFComponentBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +27,12 @@ public class MDEComponent extends ZFComponent{
 
     private ThreadPoolExecutor service = null;
 
-    private Map<String, List<EventHandler>> tops = new HashMap<String, List<EventHandler>>();
+    private final Map<String, List<EventHandler>> tops = new HashMap<String, List<EventHandler>>();
     
-    private JSONObject states = new JSONObject();
+    private final JSONObject states = new JSONObject();
 
     private MDEComponent() {
-        service = new ThreadPoolExecutor(3, 500, 5 , TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(20));
+        service = new ThreadPoolExecutor(3, 20, 5 , TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(20));
     }
 
     public static MDEComponent getInstance() {
@@ -93,7 +93,7 @@ public class MDEComponent extends ZFComponent{
             ZFComponentBean bean = new ZFComponentBean();
             bean.setName(getName());
             bean.setStates(states.toString(4));
-            ZFComponentBeanDao.getInstance().getZfComponentDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(ZFComponentBean.class).createOrUpdate(bean);
         } catch(Exception e){
             e.printStackTrace();
         }

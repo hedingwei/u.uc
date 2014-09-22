@@ -5,12 +5,9 @@
  */
 package com.ambimmort.uc.zfserver.channel.client;
 
-import com.ambimmort.uc.zfserver.channel.ConnectionListener;
 import com.ambimmort.uc.zfserver.type.ConnectionState;
-import com.ambimmort.uc.zfserver.codec.UcProtocolCodecFactory;
+import com.ambimmort.uc.zfserver.component.transport.codec.UcProtocolCodecFactory;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,32 +29,8 @@ public class ClientConnection extends Thread {
     private IoSession session = null;
     private IoConnector connector = null;
     private EndPoint endPoint = null;
-    private List<ConnectionListener> connectionListeners = new ArrayList<ConnectionListener>();
     private boolean shouldStop = false;
     
-    
-    public void notifyReconnecting(IoSession session) {
-        for (ConnectionListener l : connectionListeners) {
-            l.onConnecting(session);
-        }
-    }
-
-    public void notifyDisconnected(IoSession session) {
-        for (ConnectionListener l : connectionListeners) {
-            l.onDisConnected(session);
-        }
-    }
-
-    public void notifyConnected(IoSession session) {
-        for (ConnectionListener l : connectionListeners) {
-            l.onConnected(session);
-        }
-    }
-
-    public void addConnectionListener(ConnectionListener listener) {
-        connectionListeners.add(listener);
-    }
-
     public ConnectionState getConnetionState() {
         return connetionState;
     }
@@ -124,7 +97,7 @@ public class ClientConnection extends Thread {
 
     public synchronized void connect() {
         connetionState = ConnectionState.Connecting;
-        notifyReconnecting(null);
+    
         ConnectFuture future = connector.connect(new InetSocketAddress(this.endPoint.getHost(), this.endPoint.getPort()));
 
         boolean b = future.awaitUninterruptibly(3, TimeUnit.SECONDS);
@@ -136,7 +109,7 @@ public class ClientConnection extends Thread {
 
     public void needReconnect() {
         connetionState = ConnectionState.DisConnected;
-        notifyDisconnected(session);
+     
         session = null;
     }
 

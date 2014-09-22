@@ -8,7 +8,6 @@ package com.ambimmort.u.uc.repository;
 import com.ambimmort.u.uc.repository.bean.MessageNoPoolBean;
 import com.ambimmort.u.uc.repository.bean.PolicyBean;
 import com.ambimmort.u.uc.repository.bean.RepositoryOperationLogBean;
-import com.ambimmort.u.uc.repository.bean.RepositoryOperationBean;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -338,10 +336,11 @@ public class UcPolicyRepository {
 
         UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", "0x01", "GreeNet-1"), false);
         UcRepositoryKit kit = repo.getSvnKit();
+       
         
 
         String s = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-"<msg_0x01 messageNo=\"0\" messageSequenceNo=\"0\" messageSerialNo=\"0\"\n" +
+"<msg_0x01 messageNo=\"2\" messageSequenceNo=\"0\" messageSerialNo=\"0\"\n" +
 "	xmlns=\"http://www.ambimmort.com/msg_0x01\" xmlns:u=\"http://www.ambimmort.com/UType\"\n" +
 "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
 "	xsi:schemaLocation=\"http://www.ambimmort.com/msg_0x01 msg_0x01.xsd \">\n" +
@@ -352,18 +351,18 @@ public class UcPolicyRepository {
 "	<R_Freq>1</R_Freq>\n" +
 "	<R_DestIP>\n" +
 "		<u:IPType>IPv4</u:IPType>\n" +
-"		<u:IPv4Address>111.228.250.176</u:IPv4Address>\n" +
+"		<u:IPv4Address>111.228.250.171</u:IPv4Address>\n" +
 "	</R_DestIP>\n" +
 "	<R_DestPort>60002</R_DestPort>\n" +
-"	<R_Method>0</R_Method>\n" +
+"	<R_Method>1</R_Method>\n" +
 "	<UserName></UserName>\n" +
 "	<Password></Password>\n" +
 "	<MessageSerialNo>1</MessageSerialNo>\n" +
 "</msg_0x01>\n" +
 "";
 
-        RepositoryOperationLogBean log0 = kit.create(Base64.encodeBytes(s.getBytes("utf-8")));
-        System.out.println(log0);
+        RepositoryOperationLogBean log1 = kit.create(Base64.encodeBytes(s.getBytes("utf-8")),"ddd");
+        System.out.println(log1);
 //        RepositoryOperationLogBean log1 = kit.create(Base64.encodeBytes("abc".getBytes("utf-8")));
 //
 //        kit.update(log1.getSvnFile().getMessageNo(), Base64.encodeBytes("abd".getBytes("utf-8")));

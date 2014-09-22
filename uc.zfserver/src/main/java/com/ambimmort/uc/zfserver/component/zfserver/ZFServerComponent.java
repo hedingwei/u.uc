@@ -10,14 +10,12 @@ import com.ambimmort.uc.zfserver.bean.ucdata.UcData_HeartBeatBean;
 import com.ambimmort.uc.zfserver.bean.ucdata.UcData_DPIReportedPolicyVersionBean;
 import com.ambimmort.uc.zfserver.bean.ZFComponentBean;
 import com.ambimmort.uc.zfserver.bean.ZFPropertyBean;
-import com.ambimmort.uc.zfserver.channel.server.ServerChannelHandler;
-import com.ambimmort.uc.zfserver.channel.server.WhitelistFilter;
-import com.ambimmort.uc.zfserver.codec.UcProtocolCodecFactory;
+import com.ambimmort.uc.zfserver.component.transport.channel.server.ServerChannelHandler;
+import com.ambimmort.uc.zfserver.component.transport.channel.server.WhitelistFilter;
+import com.ambimmort.uc.zfserver.component.transport.codec.UcProtocolCodecFactory;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.DPIEndPointBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.HeartBeatBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.RuntimeDPIPolicyVersionBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFComponentBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
+
 import com.ambimmort.uc.zfserver.component.database.dao.ZFPropertyBeanDao;
 import com.ambimmort.uc.zfserver.component.messageDriven.EventHandler;
 import com.ambimmort.uc.zfserver.component.messageDriven.MDEComponent;
@@ -108,17 +106,6 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
         acceptor.unbind();
     }
 
-    public static void main(String[] args) {
-        try {
-            DPIEndPointBeanDao.getInstance();
-            DPIEndPointManager.getInstance().refresh();
-            ZFServerComponent server = new ZFServerComponent();
-            server.bind();
-        } catch (SQLException ex) {
-            Logger.getLogger(ZFServerComponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public String getName() {
         return "ZFServerComponent";
@@ -137,10 +124,11 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
             state.put("ScheduledWriteBytes", acceptor.getScheduledWriteBytes());
             state.put("ScheduledWriteMessages", acceptor.getScheduledWriteMessages());
             state.put("Statistics", JSONObject.fromObject(acceptor.getStatistics()));
+
             ZFComponentBean bean = new ZFComponentBean();
             bean.setName(getName());
             bean.setStates(state.toString(4));
-            ZFComponentBeanDao.getInstance().getZfComponentDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(ZFComponentBean.class).createOrUpdate(bean);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -160,6 +148,24 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
         bind();
     }
 
+    /**
+     * ZFServerComponent模块被注册到MDE事件驱动引擎中，它需要监听如下个消息：</br>
+     * <ul>
+     * <li>
+     * 数据记录属性变更消息
+     * <ul>
+     * <li>ZFPropertyBean表变更消息</li>
+     * <li>DPIEndPointBean表变更消息</li>
+     * </ul>
+     * </li>
+     * <li>0xc1: DPI设备心跳消息</li>
+     * <li>0xc2: 策略同步请求响应消息</li>
+     * </ul>
+     *
+     * @param name
+     * @param args
+     * @throws Throwable
+     */
     @Override
     public void onEvent(final String name, final Map<String, Object> args) throws Throwable {
         if (name.equals(DBRecordAlterationMonitor.EVENT_DATABASE_FIELD_CHANGED)) {
@@ -210,7 +216,22 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
                         DPIEndPointBean newBean = (DPIEndPointBean) args.get("new");
                         whiteListFilter.disallow(InetAddress.getByName(oldBean.getIp()));
                         whiteListFilter.allow(InetAddress.getByName(newBean.getIp()));
-
+                        if (oldBean.isEnable() && (!newBean.isEnable())) {
+                            if (DPIEndPointManager.getInstance().getEndPoints().containsKey(oldBean.getIp())) {
+                                DPIEndPoint ep = DPIEndPointManager.getInstance().getEndPoints().remove(oldBean.getIp());
+                                ep.getClientChannel().stop();
+                                ep.getServerChannel().stopMe();
+                            }
+                        } else if (newBean.isEnable() && (!oldBean.isEnable())) {
+                            if (DPIEndPointManager.getInstance().getEndPoints().containsKey(oldBean.getIp())) {
+                                DPIEndPoint ep = DPIEndPointManager.getInstance().getEndPoints().remove(oldBean.getIp());
+                                ep.getClientChannel().stop();
+                                ep.getServerChannel().stopMe();
+                            } else {
+                                DPIEndPoint endPoint = new DPIEndPoint(newBean);
+                                DPIEndPointManager.getInstance().getEndPoints().put(newBean.getIp(), endPoint);
+                            }
+                        }
                         if (DPIEndPointManager.getInstance().getEndPoints().containsKey(oldBean.getIp())) {
                             DPIEndPoint ep = DPIEndPointManager.getInstance().getEndPoints().remove(oldBean.getIp());
                             ep.getClientChannel().stop();
@@ -221,8 +242,7 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
                     }
                 }
             }
-        } else if ("u.0xc1".equals(name)) {
-//            DPIEndPoint endPoint = (DPIEndPoint) args.get("endPoint");
+        } else if ("u.0xc1".equals(name)) { //处理DPI设备心跳消息
             String dpiName = (String) args.get("name");
             Long time = (Long) args.get("time");
             UcData_HeartBeatBean bean = new UcData_HeartBeatBean();
@@ -230,10 +250,10 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
             bean.setName(dpiName);
             bean.setTime(new Date(time));
             bean.setData(data);
-            HeartBeatBeanDao.getInstance().getHeartBeatBeanDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(UcData_HeartBeatBean.class).createOrUpdate(bean);
         } else if ("u.0xc2".equals(name)) {
             final DPIEndPoint endPoint = (DPIEndPoint) args.get("endPoint");
-            RuntimeDPIPolicyVersionBeanDao.getInstance().getPolicyRepositoryDao().callBatchTasks(new Callable<Void>() {
+            MyDaoManager.getInstance().getDao(UcData_DPIReportedPolicyVersionBean.class).callBatchTasks(new Callable<Void>() {
 
                 @Override
                 public Void call() throws Exception {
@@ -242,18 +262,14 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
                     for (Object k : dd.keySet()) {
                         mt = (String) k;
                         UcData_DPIReportedPolicyVersionBean bean = new UcData_DPIReportedPolicyVersionBean();
-
                         bean.setDevName(endPoint.getDpiEndPointBean().getDevName());
-
                         bean.setMessageType(mt);
                         bean.setMessageSerialNo(dd.getLong(mt));
-                        System.out.println(bean);
                         try {
-                            RuntimeDPIPolicyVersionBeanDao.getInstance().getPolicyRepositoryDao().createOrUpdate(bean);
-                        } catch (Exception e) {
-                            RuntimeDPIPolicyVersionBeanDao.getInstance().getPolicyRepositoryDao().update(bean);
+                            MyDaoManager.getInstance().getDao(UcData_DPIReportedPolicyVersionBean.class).createOrUpdate(bean);
+                        } catch (SQLException e) {
+                            MyDaoManager.getInstance().getDao(UcData_DPIReportedPolicyVersionBean.class).update(bean);
                         }
-
                     }
                     return null;
                 }
@@ -261,8 +277,6 @@ public class ZFServerComponent extends ZFComponent implements EventHandler {
 
         }
 
-        System.out.println("-------" + name + "---------1111111111");
-        System.out.println(args);
     }
 
 }

@@ -6,9 +6,9 @@
 package com.ambimmort.uc.zfserver.component.zfserver;
 
 import com.ambimmort.uc.zfserver.channel.client.ClientChannel;
-import com.ambimmort.uc.zfserver.channel.server.ServerChannel;
+import com.ambimmort.uc.zfserver.component.transport.channel.server.ServerChannel;
 import com.ambimmort.uc.zfserver.bean.DPIEndPointBean;
-import com.ambimmort.uc.zfserver.component.database.dao.DPIEndPointBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +56,7 @@ public class DPIEndPoint {
     
     public void persistence(){
         try {
-            DPIEndPointBeanDao.getInstance().getDpiEndPointDao().update(this.dpiEndPointBean);
+            MyDaoManager.getInstance().getDao(DPIEndPointBean.class).update(this.dpiEndPointBean);
         } catch (SQLException ex) {
             Logger.getLogger(DPIEndPoint.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -103,5 +103,16 @@
             <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-bundle</artifactId>
+            <version>2.5.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+        	<groupId>com.ambimmort</groupId>
+        	<artifactId>uc.repository.client</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

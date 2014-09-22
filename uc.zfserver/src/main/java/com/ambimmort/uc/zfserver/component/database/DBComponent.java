@@ -17,10 +17,6 @@ import com.ambimmort.uc.zfserver.bean.ZFComponentBean;
 import com.ambimmort.uc.zfserver.bean.ZFPropertyBean;
 import com.ambimmort.uc.zfserver.bean.ZFTask_PolicySynchronization;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.DPIEndPointBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.PolicyRepositoryBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFComponentBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFPropertyBeanDao;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
@@ -34,7 +30,7 @@ public class DBComponent extends ZFComponent {
 
     private static DBComponent instance = null;
     private JdbcPooledConnectionSource connectionSource = null;
-    private JSONObject state = new JSONObject();
+    private final JSONObject state = new JSONObject();
 
     private DBComponent() throws SQLException {
         connectionSource = new JdbcPooledConnectionSource("jdbc:mysql://localhost:3306/zfdb?zeroDateTimeBehavior=convertToNull", "root", "123456");
@@ -74,45 +70,31 @@ public class DBComponent extends ZFComponent {
             ZFComponentBean bean = new ZFComponentBean();
             bean.setName(getName());
             bean.setStates(state.toString(4));
-            ZFComponentBeanDao.getInstance().getZfComponentDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(ZFComponentBean.class).createOrUpdate(bean);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void initTable(Class aClass) {
-        try {
-            TableUtils.createTableIfNotExists(DBComponent.getInstance().getConnectionSource(), aClass);
-        } catch (Exception e) {
-        }
+    private void initTable(Class aClass) throws SQLException {
+        TableUtils.createTableIfNotExists(DBComponent.getInstance().getConnectionSource(), aClass);
     }
 
     @Override
     protected void prestart() throws Throwable {
-        try {
             initTable(DPIConfiguredPolicyRepositoryBean.class);
             initTable(DPIEndPointBean.class);
             initTable(RepositoryEntryBean.class);
             initTable(ZFAgentBean.class);
-            
             initTable(ZFComponentBean.class);
             initTable(ZFPropertyBean.class);
             initTable(ZFTask_PolicySynchronization.class);
-            
+
             initTable(UcData_DPIReportedPolicyVersionBean.class);
             initTable(UcData_HeartBeatBean.class);
-            
+
             initTable(UcMessageSendingLogBean.class);
             initTable(SequenceNoPtrBean.class);
-            
-            ZFPropertyBeanDao.getInstance();
-            DPIEndPointBeanDao.getInstance();
-            ZFComponentBeanDao.getInstance();
-            PolicyRepositoryBeanDao.getInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override

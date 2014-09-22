@@ -7,9 +7,8 @@ package com.ambimmort.uc.zfserver.component.vysper;
 
 import com.ambimmort.uc.zfserver.bean.ZFAgentBean;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFAgentBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
 import com.ambimmort.uc.zfserver.component.messageDriven.EventHandler;
-import com.ambimmort.uc.zfserver.xagent.Commander;
 import java.io.File;
 import java.util.Map;
 import net.sf.json.JSONObject;
@@ -68,7 +67,7 @@ public class VysperComponent extends ZFComponent implements EventHandler {
         server.setStorageProviderRegistry(providerRegistry);
         final AccountManagement accountManagement = (AccountManagement) providerRegistry.retrieve(AccountManagement.class);
 
-        for (ZFAgentBean bean : ZFAgentBeanDao.getInstance().getZfAgentBeanDao().queryForAll()) {
+        for (ZFAgentBean bean : MyDaoManager.getInstance().getDao(ZFAgentBean.class).queryForAll()) {
             if (!accountManagement.verifyAccountExists(EntityImpl.parse(bean.getName()))) {
                 accountManagement.addUser(EntityImpl.parse(bean.getName()), bean.getPassword());
             }

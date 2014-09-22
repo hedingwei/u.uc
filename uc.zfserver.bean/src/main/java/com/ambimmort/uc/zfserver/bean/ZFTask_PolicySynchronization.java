@@ -38,9 +38,6 @@ public class ZFTask_PolicySynchronization {
     @DatabaseField(dataType = DataType.LONG_STRING)
     private String info;
     
-    
-
-    
 
     public long getId() {
         return id;

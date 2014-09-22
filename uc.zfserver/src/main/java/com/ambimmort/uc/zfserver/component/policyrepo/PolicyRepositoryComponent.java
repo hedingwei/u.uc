@@ -9,12 +9,12 @@ import com.ambimmort.uc.zfserver.bean.DPIEndPointBean;
 import com.ambimmort.uc.zfserver.bean.DPIConfiguredPolicyRepositoryBean;
 import com.ambimmort.uc.zfserver.bean.ZFComponentBean;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.DPIEndPointBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.PolicyRepositoryBeanDao;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFComponentBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
+
 import com.ambimmort.uc.zfserver.component.database.dao.ZFPropertyBeanDao;
 import com.ambimmort.uc.zfserver.component.messageDriven.EventHandler;
 import com.ambimmort.uc.zfserver.component.messageDriven.MDEComponent;
+import com.j256.ormlite.dao.Dao;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +58,7 @@ public class PolicyRepositoryComponent extends ZFComponent {
     protected void refreshState() {
         try {
             boolean policyRepoServer_isStarted = PolicyRepoServerClient.getInstance().isStarted();
-            if(!policyRepoServer_isStarted){
+            if (!policyRepoServer_isStarted) {
                 PolicyRepoServerClient.getInstance().start(ZFPropertyBeanDao.getInstance().getProperty("PolicyRepoServer.webserver.url") + "/?wsdl");
             }
             state.put("prsc_isStarted", policyRepoServer_isStarted);
@@ -71,7 +71,7 @@ public class PolicyRepositoryComponent extends ZFComponent {
             ZFComponentBean bean = new ZFComponentBean();
             bean.setName(getName());
             bean.setStates(state.toString(4));
-            ZFComponentBeanDao.getInstance().getZfComponentDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(ZFComponentBean.class).createOrUpdate(bean);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -81,9 +81,9 @@ public class PolicyRepositoryComponent extends ZFComponent {
 
         try {
             Map<String, String> m = new HashMap<String, String>();
-            List<DPIEndPointBean> beans = DPIEndPointBeanDao.getInstance().getDpiEndPointDao().queryForAll();
+            List<DPIEndPointBean> beans = MyDaoManager.getInstance().getDao(DPIEndPointBean.class).queryForAll();
             for (DPIEndPointBean bean : beans) {
-                DPIConfiguredPolicyRepositoryBean prb = PolicyRepositoryBeanDao.getInstance().getPolicyRepositoryDao().queryForId(bean.getDevName());
+                DPIConfiguredPolicyRepositoryBean prb = ((Dao<DPIConfiguredPolicyRepositoryBean, String>) MyDaoManager.getInstance().getDao(DPIConfiguredPolicyRepositoryBean.class)).queryForId(bean.getDevName());
                 JSONObject tmplate = JSONObject.fromObject(prb.getValue());
                 JSONObject repo = tmplate.getJSONObject("repo");
                 for (Object obj : repo.keySet()) {
@@ -92,16 +92,15 @@ public class PolicyRepositoryComponent extends ZFComponent {
                     m.put(key, name);
                 }
             }
-
             for (String k : m.keySet()) {
                 try {
                     System.out.println("k;" + k + "\tv:" + m.get(k));
-                    PolicyRepoClient.getInstance().invoke("createRepository", k, m.get(k));
+                    PolicyRepoClient.getInstance().getApi().createRepository(k, m.get(k));
+//                    PolicyRepoClient.getInstance().invoke("createRepository", k, m.get(k));
                 } catch (Exception ex) {
                     Logger.getLogger(PolicyRepositoryComponent.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(PolicyRepositoryComponent.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -11,7 +11,7 @@ import com.ambimmort.uc.zfserver.bean.ZFComponentBean;
 import com.ambimmort.uc.zfserver.bean.ZFPropertyBean;
 import com.ambimmort.uc.zfserver.component.ZFComponent;
 import com.ambimmort.uc.zfserver.component.database.DBComponent;
-import com.ambimmort.uc.zfserver.component.database.dao.ZFComponentBeanDao;
+import com.ambimmort.uc.zfserver.component.database.MyDaoManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +24,7 @@ import net.sf.json.JSONObject;
 public class MonitorComponent extends ZFComponent{
     private static MonitorComponent instance = null;
     
-    private JSONObject state = new JSONObject();
+    private final JSONObject state = new JSONObject();
     
     private DBRecordAlterationMonitor<String,ZFPropertyBean> zfPropertyBeanMonitor = null;
     
@@ -68,7 +68,7 @@ public class MonitorComponent extends ZFComponent{
             ZFComponentBean bean = new ZFComponentBean();
             bean.setName(getName());
             bean.setStates(state.toString(4));
-            ZFComponentBeanDao.getInstance().getZfComponentDao().createOrUpdate(bean);
+            MyDaoManager.getInstance().getDao(ZFComponentBean.class).createOrUpdate(bean);
         
         }  catch(Exception ex){
             ex.printStackTrace();

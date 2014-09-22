@@ -9,15 +9,17 @@ import com.ambimmort.u.uc.repository.UcPolicyRepository;
 import com.ambimmort.u.uc.repository.bean.PolicyBean;
 import com.ambimmort.u.uc.repository.bean.RepositoryOperationBean;
 import com.ambimmort.u.uc.repository.bean.RepositoryOperationLogBean;
+import com.ambimmort.u.uc.repository.bean.webservice.rmapi.InstanceBean;
 import com.ambimmort.u.uc.repository.bean.webservice.rmapi.RepositoryManagementWebServiceBean;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.jws.WebService;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -34,12 +36,16 @@ public class RepositoryManagementWebServiceBeanImpl implements RepositoryManagem
     }
 
     @Override
-    public List<String> listRepositories(String type) {
+    public List<InstanceBean> listRepositories(String type) {
         List<UcPolicyRepository> repos = UcPolicyRepository.getAllRepositorys();
-        List<String> repoNames = new ArrayList<String>();
+        List<InstanceBean> repoNames = new ArrayList<InstanceBean>();
         for (UcPolicyRepository repo : repos) {
             if (repo.getEntry().getMessageType().equals(type)) {
-                repoNames.add(repo.getEntry().getInstanceName());
+                InstanceBean bean = new InstanceBean();
+                bean.setType(type);
+                bean.setInstance(repo.getEntry().getInstanceName());
+                bean.setSerialNo(getHeadVersion(type, repo.getEntry().getInstanceName()));
+                repoNames.add(bean);
             }
         }
 
@@ -59,15 +65,15 @@ public class RepositoryManagementWebServiceBeanImpl implements RepositoryManagem
     }
 
     @Override
-    public RepositoryOperationLogBean addPolicy(String type, String instance, String policy) {
+    public RepositoryOperationLogBean addPolicy(String type, String instance, String policy,String comment) {
         UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", type, instance), false);
-        return repo.getSvnKit().create(policy);
+        return repo.getSvnKit().create(policy, comment);
     }
 
     @Override
-    public RepositoryOperationLogBean updatePolicy(String type, String instance, int messageNo, String policy) {
+    public RepositoryOperationLogBean updatePolicy(String type, String instance, int messageNo, String policy,String comment) {
         UcPolicyRepository repo = UcPolicyRepository.getInstance(UcPolicyRepository.repositoryEntry("repo", type, instance), false);
-        return repo.getSvnKit().update(messageNo, policy);
+        return repo.getSvnKit().update(messageNo, policy, comment);
     }
 
     @Override
@@ -131,11 +137,11 @@ public class RepositoryManagementWebServiceBeanImpl implements RepositoryManagem
         JSONObject obj = new JSONObject();
        
         List<String> types = listRepositoryTypes();
-        List<String> instances = null;
+        List<InstanceBean> instances = null;
         for(String type: types){
             instances = listRepositories(type);
-            for(String instance: instances){
-                if(instance.equals(name)){
+            for(InstanceBean instance: instances){
+                if(instance.getInstance().equals(name)){
                     try {
                         obj.put(name, type);
                     } catch (JSONException ex) {

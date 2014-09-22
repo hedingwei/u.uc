@@ -16,7 +16,6 @@ import net.sf.json.JSONObject;
  */
 public class PolicySynTaskComponent extends ZFComponent{
 
-    
     private JSONObject state = new JSONObject();
     private Timer timer = new Timer("PolicySynTaskComponent_timer");
 
@@ -27,7 +26,7 @@ public class PolicySynTaskComponent extends ZFComponent{
 
     @Override
     protected void poststart() throws Throwable {
-        timer.scheduleAtFixedRate(new PolicySynTask(), 0, 50000);
+        timer.scheduleAtFixedRate(new PolicySynTask(), 0, 60000);
     }
     
     @Override

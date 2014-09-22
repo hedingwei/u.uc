@@ -51,7 +51,6 @@ public class ClientChannelReconnectHandler extends IoHandlerAdapter {
     public void sessionOpened(IoSession session) throws Exception {
         connection.setConnetionState(ConnectionState.Connected);
         connection.setSession(session);
-        connection.notifyConnected(session);
         handler.sessionOpened(session);
     }
 }

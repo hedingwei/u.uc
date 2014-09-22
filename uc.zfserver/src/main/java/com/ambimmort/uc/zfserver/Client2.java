@@ -32,6 +32,8 @@ public class Client2 {
 //        connectionConfiguration.setKeystorePath("src/main/resources/bogus_mina_tls.cert");
 //        connectionConfiguration.setTruststorePath("src/main/resources/bogus_mina_tls.cert");
 //        connectionConfiguration.setTruststorePassword("boguspw");
+        
+       
 
         XMPPConnection.DEBUG_ENABLED = true;
         XMPPConnection client = new XMPPConnection(connectionConfiguration);
